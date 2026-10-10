@@ -19,7 +19,7 @@
         .tab-btn { padding: 8px 16px; border-radius: 10px; font-size: 14px; font-weight: 600; border: none; cursor: pointer; transition: all 0.2s; background: transparent; color: #475569; }
         .tab-btn.active { background: #ffffff; color: #4f46e5; box-shadow: 0 2px 4px rgba(0,0,0,0.05); }
 
-        main { max-width: 700px; width: 100%; margin: 30px auto; padding: 0 16px; flex-grow: 1; display: flex; flex-direction: column; justify-content: center; }
+        main { max-width: 700px; width: 100%; margin: 5px auto; padding: 0 16px; flex-grow: 1; display: flex; flex-direction: column; justify-content: center; }
         .card { background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(10px); border-radius: 24px; padding: 32px; box-shadow: 0 10px 25px rgba(0,0,0,0.05); border: 1px solid #ffffff; margin-bottom: 20px; }
         
         .hidden { display: none !important; }
@@ -71,3 +71,19 @@
 
         footer { text-align: center; padding: 16px; font-size: 12px; color: #94a3b8; border-top: 1px solid #f1f5f9; background: rgba(255,255,255,0.4); }
    
+
+        /* 預設（電腦版）維持原本的顯示 */
+
+/* 當螢幕寬度小於或等於 768px（手機版尺寸）且進入測驗時 */
+@media (max-width: 768px) {
+  /* 當 body 擁有 .quiz-running 類別時，隱藏手機版的頂部選單與設定區 */
+  body.quiz-running #tab-menu,
+  body.quiz-running #quiz-config {
+    display: none !important;
+  }
+  
+  /* 讓手機版測驗區塊在隱藏上方元件後自動頂上去，畫面更清爽 */
+  body.quiz-running #quiz-container {
+    margin-top: 0 !important;
+  }
+}
