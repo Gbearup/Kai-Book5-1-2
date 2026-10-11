@@ -26,7 +26,7 @@
         
         .welcome-icon { width: 70px; height: 70px; background: #e0e7ff; color: #4f46e5; border-radius: 20px; display: flex; align-items: center; justify-content: center; font-size: 30px; margin: 0 auto 20px; }
         h2 { font-size: 24px; text-align: center; margin-bottom: 8px; color: #0f172a; }
-        .desc { text-align: center; color: #64748b; font-size: 14px; margin-bottom: 24px; }
+        /* .desc { text-align: center; color: #64748b; font-size: 14px; margin-bottom: 24px; } */
         
         .section-label { font-size: 12px; font-weight: 700; color: #64748b; text-transform: uppercase; margin-bottom: 8px; letter-spacing: 0.5px; }
         .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 20px; }
@@ -73,17 +73,14 @@
    
 
         /* 預設（電腦版）維持原本的顯示 */
-
 /* 當螢幕寬度小於或等於 768px（手機版尺寸）且進入測驗時 */
 @media (max-width: 768px) {
-  /* 當 body 擁有 .quiz-running 類別時，隱藏手機版的頂部選單與設定區 */
   body.quiz-running #tab-menu,
-  body.quiz-running #quiz-config {
+  body.quiz-running #welcome-screen {
     display: none !important;
   }
   
-  /* 讓手機版測驗區塊在隱藏上方元件後自動頂上去，畫面更清爽 */
-  body.quiz-running #quiz-container {
+  body.quiz-running #quiz-screen {
     margin-top: 0 !important;
   }
 }
