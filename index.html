@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>國中英文單字學習與測驗系統 (第五冊)</title>
+    <title>國中B5英單測驗</title>
    <link rel="stylesheet" href="style5.css">
 </head>
 <body>
@@ -13,7 +13,7 @@
             <div class="logo-area">
                 <div class="logo-icon">📚</div>
                 <div class="logo-title">
-                    <h1>國中英文單字學習系統</h1>
+                    <h1>國中B5英文單字測驗</h1>
                     <p id="current-lesson-subtitle">第五冊U1-U2單字 (含音效)</p>
                 </div>
             </div>
@@ -26,7 +26,7 @@
                 </div>
                 <!-- 模式切換按鈕 -->
                 <div class="tabs">
-                    <button onclick="switchTab('quiz')" id="tab-quiz" class="tab-btn active">🎯 測驗模式</button>
+                    <button onclick="switchTab('quiz')" id="tab-quiz" class="tab-btn active">✍️ 測驗模式</button>
                     <button onclick="switchTab('review')" id="tab-review" class="tab-btn">📖 單字總複習</button>
                 </div>
             </div>
@@ -42,7 +42,8 @@
             </div>
 
             <div id="welcome-screen" class="card">
-                <div class="welcome-icon">🎯</div>
+                <div class="welcome-icon">  <img src="quiz-icon.jfif" alt="測驗圖示" class="small-icon"> </div>
+
                 <h2 id="welcome-title">第五冊 第一課 單字測驗</h2>
                 <!-- <p class="desc">請選擇測驗模式與題數：</p> -->
 
@@ -53,10 +54,9 @@
                 </div>
 
                 <div class="section-label">題目數量</div>
-                <div class="grid-3">
-                    <button type="button" class="option-btn count-btn selected" onclick="setQuestionCount(5, this)">5 題</button>
+                <div class="grid-2">
                     <button type="button" class="option-btn count-btn" onclick="setQuestionCount(10, this)">10 題</button>
-                    <button type="button" class="option-btn count-btn" onclick="setQuestionCount(15, this)">15 題</button>
+                    <button type="button" class="option-btn count-btn" onclick="setQuestionCount('all', this)">全部</button>
                 </div>
 
                 <button onclick="startQuiz()" class="primary-btn">開始測驗</button>
@@ -95,9 +95,9 @@
             </div>
 
             <div id="result-screen" class="card hidden" style="text-align: center;">
-                <div id="result-icon" class="welcome-icon">🏆</div>
-                <h2>測驗完成！</h2>
-                <p id="result-comment" class="desc">太棒了！你對單字的掌握度相當高！</p>
+                <!-- <div id="result-icon" class="welcome-icon">🏆</div> -->
+                <h2>📝測驗完成！</h2>
+                <!-- <p id="result-comment" class="desc">太棒了！你對單字的掌握度相當高！</p> -->
                 
                 <div style="background:#eef2ff; border:1px solid #c7d2fe; border-radius:16px; padding:20px; max-width:240px; margin: 0 auto 24px;">
                     <div style="font-size:12px; color:#4f46e5; font-weight:600; margin-bottom:4px;">最終得分</div>
@@ -222,7 +222,7 @@
         let vocabList = lessonsData[currentLessonKey];
 
         let selectedMode = 'choice';
-        let questionCount = 5;
+        let questionCount = 10;
         let currentQuiz = [];
         let currentIndex = 0;
         let score = 0;
@@ -333,7 +333,11 @@
             userAnswers = [];
             
             const shuffled = shuffleArray([...vocabList]);
-            const actualCount = Math.min(questionCount, shuffled.length);
+
+
+            // const actualCount = Math.min(questionCount, shuffled.length);
+            // 判斷如果選擇的是 'all' 就用全部單字量，否則就是數字 (10)
+            const actualCount = (questionCount === 'all') ? shuffled.length : Math.min(questionCount, shuffled.length);
             
             currentQuiz = shuffled.slice(0, actualCount).map(item => {
                 const otherOptions = vocabList.filter(v => v.word !== item.word);
