@@ -248,16 +248,10 @@
             document.getElementById('welcome-title').innerText = `${lessonNames[lessonKey]} 單字測驗`;
             document.getElementById('review-title').innerText = `${lessonNames[lessonKey]}單字總複習`;
             
-            resetToWelcome();
-            document.getElementById('result-screen').classList.add('hidden');
-            document.getElementById('review-screen').classList.add('hidden');
-            document.getElementById('welcome-screen').classList.remove('hidden');
-            
-            // 加上這行：當回到歡迎/設定畫面時，把手機版的隱藏狀態解除，恢復上方選單與設定
-            document.body.classList.remove('quiz-running');
-            // if(!document.getElementById('section-review').classList.contains('hidden')) {
-            //     renderVocabTable(vocabList);
-            // }
+                        
+            if(!document.getElementById('section-review').classList.contains('hidden')) {
+                renderVocabTable(vocabList);
+            }
         }
 
         function switchTab(tab) {
@@ -544,6 +538,9 @@
             document.getElementById('result-screen').classList.add('hidden');
             document.getElementById('review-screen').classList.add('hidden');
             document.getElementById('welcome-screen').classList.remove('hidden');
+
+            // 確保回到首頁時解除手機版的隱藏狀態
+            document.body.classList.remove('quiz-running');
         }
     </script>
 </body>
