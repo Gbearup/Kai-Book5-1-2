@@ -28,6 +28,8 @@
                 <div class="tabs">
                     <button onclick="switchTab('quiz')" id="tab-quiz" class="tab-btn active">✍️ 測驗模式</button>
                     <button onclick="switchTab('review')" id="tab-review" class="tab-btn">📖 單字總複習</button>
+                    <button onclick="location.href='index_whole.html'" class="tab-btn">📚 1-4冊</button>
+                   
                 </div>
             </div>
         </div>
@@ -241,7 +243,8 @@
             const lessonNames = {
                 lesson1: "第五冊 第一課",
                 lesson2: "第五冊 第二課",
-                mixed: "第五冊 綜合 (1+2課)"
+                mixed: "第五冊 綜合 (1+2課)"           
+                
             };
             
             document.getElementById('current-lesson-subtitle').innerText = `${lessonNames[lessonKey]}核心單字庫 (含音效)`;

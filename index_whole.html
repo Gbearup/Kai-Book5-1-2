@@ -1,0 +1,545 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>國中英單測驗</title>
+   <link rel="stylesheet" href="style5.css">
+</head>
+<body>
+
+    <header>
+        <div class="header-container">
+            <div class="logo-area">
+                <div class="logo-icon">
+                    <img src="logo.gif" alt="icon" style="width: 25px; height: 25px;">
+                </div>
+                <div class="logo-title">
+                    <h1>國中第1-3冊英文單字測驗</h1>
+                </div>
+            </div>
+            <div class="header-nav" id="tab-menu">
+                <!-- 獨立的課程切換按鈕 -->
+                <div class="lesson-group">
+                    <button onclick="changeLesson('lesson1')" id="lesson1-btn" class="lesson-btn active">第一冊</button>
+                    <button onclick="changeLesson('lesson2')" id="lesson2-btn" class="lesson-btn">第二冊</button>
+                    <button onclick="changeLesson('lesson3')" id="lesson3-btn" class="lesson-btn">第三冊</button>
+                    <button onclick="changeLesson('mixed')" id="mixed-btn" class="lesson-btn">綜合</button>
+                </div>
+                <!-- 模式切換按鈕 -->
+                <div class="tabs">
+                    <button onclick="switchTab('quiz')" id="tab-quiz" class="tab-btn active">✍️ 測驗模式</button>
+                    <button onclick="switchTab('review')" id="tab-review" class="tab-btn">📖 單字總複習</button>
+                    <button onclick="location.href='index.html'" class="tab-btn">📚 第5冊</button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <div id="section-quiz">
+            <div style="display:flex; justify-content:flex-end; margin-bottom:10px;">
+                <div id="score-badge" class="hidden" style="background:#eef2ff; color:#4338ca; padding:6px 14px; border-radius:12px; font-weight:600; font-size:13px; border:1px solid #c7d2fe;">
+                    得分: <span id="current-score">0</span> / <span id="total-questions-badge">10</span>
+                </div>
+            </div>
+
+            <div id="welcome-screen" class="card">
+                <div class="welcome-icon">  <img src="quiz-icon.jfif" alt="測驗圖示 style="width: 25px; height: 25px; class="small-icon"> </div>
+
+                <h2 id="welcome-title">第一冊 單字測驗</h2>
+
+                <div class="section-label">測驗模式</div>
+                <div class="grid-2">
+                    <button type="button" id="mode-choice" onclick="setQuizMode('choice')" class="option-btn selected">🔠 四選一選擇題</button>
+                    <button type="button" id="mode-spell" onclick="setQuizMode('spell')" class="option-btn">✍️ 拼字填空題</button>
+                </div>
+
+                <div class="section-label">題目數量</div>
+                <div class="grid-2">
+                    <button type="button" class="option-btn count-btn" onclick="setQuestionCount(10, this)">10 題</button>
+                    <button type="button" class="option-btn count-btn" onclick="setQuestionCount('all', this)">全部</button>
+                </div>
+
+                <button onclick="startQuiz()" class="primary-btn">開始測驗</button>
+            </div>
+
+            <div id="quiz-screen" class="card hidden">
+                <div class="progress-box">
+                    <div class="progress-info">
+                        <span id="question-progress">題目 1 / 10</span>
+                        <span id="progress-percentage">10%</span>
+                    </div>
+                    <div class="progress-bar-bg">
+                        <div id="progress-bar" class="progress-bar-fill"></div>
+                    </div>
+                </div>
+
+                <div style="text-align: center;">
+                    <span id="question-phonetic" class="phonetic-badge">['sæbdʒɪkt]</span>
+                    <div style="font-size: 14px; font-weight: 600; color: #64748b;">請問下列中文對應的英文單字為何？</div>
+                    <div id="question-meaning" class="meaning-box">猴子 n.</div>
+                </div>
+
+                <div id="options-container" class="choice-grid"></div>
+
+                <div id="spell-container" class="hidden">
+                    <div class="spell-box">
+                        <input type="text" id="spell-input" autocomplete="off" placeholder="請輸入英文單字..." class="spell-input">
+                        <button onclick="submitSpelling()" class="spell-submit">送出</button>
+                    </div>
+                    <div id="spell-feedback" class="hidden" style="font-weight:600; font-size:14px; margin-top:8px;"></div>
+                </div>
+
+                <div style="display:flex; justify-content:flex-end; margin-top:20px;">
+                    <button id="next-btn" onclick="nextQuestion()" disabled class="primary-btn" style="width: auto; padding: 12px 24px; background: #e2e8f0; color: #94a3b8; cursor: not-allowed; box-shadow:none;">下一題</button>
+                </div>
+            </div>
+
+            <div id="result-screen" class="card hidden" style="text-align: center;">
+                <h2>📝測驗完成！</h2>
+                
+                <div style="background:#eef2ff; border:1px solid #c7d2fe; border-radius:16px; padding:20px; max-width:240px; margin: 0 auto 24px;">
+                    <div style="font-size:12px; color:#4f46e5; font-weight:600; margin-bottom:4px;">最終得分</div>
+                    <div style="font-size:36px; font-weight:800; color:#4338ca;"><span id="final-score">8</span> <span style="font-size:18px; color:#818cf8;" id="final-total">/ 10</span></div>
+                </div>
+
+                <div style="display:flex; gap:12px; justify-content:center; flex-wrap: wrap;">
+                    <button onclick="startQuiz()" class="primary-btn" style="width:auto; padding:12px 24px;">再測驗一次</button>
+                    <button onclick="reviewMistakes()" id="review-btn" class="hidden" style="padding:12px 24px; background:white; border:2px solid #e2e8f0; border-radius:16px; font-weight:600; color:#334155; cursor:pointer;">查看錯題解析</button>
+                    <button onclick="resetToWelcome()" style="padding:12px 24px; background:#f1f5f9; border:2px solid #cbd5e1; border-radius:16px; font-weight:600; color:#334155; cursor:pointer;">🏠 回首頁</button>
+                </div>
+            </div>
+
+            <div id="review-screen" class="card hidden">
+                <h2>📖 錯題詳解</h2>
+                <div id="mistakes-list" style="max-height: 50vh; overflow-y: auto; margin: 16px 0; display:flex; flex-direction:column; gap:12px;"></div>
+                <button onclick="resetToWelcome()" class="primary-btn" style="background:#334155;">返回首頁</button>
+            </div>
+        </div>
+
+        <div id="section-review" class="card hidden">
+            <h2 id="review-title" style="margin-bottom:4px; text-align:left;">第一冊單字總複習</h2>
+            <p class="desc" style="text-align:left; margin-bottom:16px;">完整收錄本課核心單字，可透過搜尋欄快速查找。</p>
+            <input type="text" id="vocab-search" oninput="filterVocabList()" placeholder="搜尋英文單字或中文意思..." class="search-input">
+            
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>英文單字</th>
+                            <th>音標</th>
+                            <th>詞性與字義</th>
+                        </tr>
+                    </thead>
+                    <tbody id="vocab-table-body"></tbody>
+                </table>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        國中英文單字學習與測驗系統 &copy; 2026
+    </footer>
+
+    <!-- 1. 先引入單字資料檔 -->
+    <script src="juniorB1_4.js"></script>
+
+    <script>
+        // --- 音效工具 (Web Audio API) ---
+        let audioCtx = null;
+
+        function initAudio() {
+            if (!audioCtx) {
+                audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+            }
+        }
+
+        function playCorrectSound() {
+            try {
+                initAudio();
+                if (audioCtx.state === 'suspended') audioCtx.resume();
+                
+                const now = audioCtx.currentTime;
+                const osc1 = audioCtx.createOscillator();
+                const gain1 = audioCtx.createGain();
+                osc1.type = 'sine';
+                osc1.frequency.setValueAtTime(587.33, now);
+                gain1.gain.setValueAtTime(0.2, now);
+                gain1.gain.exponentialRampToValueAtTime(0.001, now + 0.2);
+                osc1.connect(gain1);
+                gain1.connect(audioCtx.destination);
+                osc1.start(now);
+                osc1.stop(now + 0.2);
+
+                const osc2 = audioCtx.createOscillator();
+                const gain2 = audioCtx.createGain();
+                osc2.type = 'sine';
+                osc2.frequency.setValueAtTime(880, now + 0.15);
+                gain2.gain.setValueAtTime(0.2, now + 0.15);
+                gain2.gain.exponentialRampToValueAtTime(0.001, now + 0.4);
+                osc2.connect(gain2);
+                gain2.connect(audioCtx.destination);
+                osc2.start(now + 0.15);
+                osc2.stop(now + 0.4);
+            } catch (e) {
+                console.log(e);
+            }
+        }
+
+        function playWrongSound() {
+            try {
+                initAudio();
+                if (audioCtx.state === 'suspended') audioCtx.resume();
+
+                const now = audioCtx.currentTime;
+                const osc = audioCtx.createOscillator();
+                const gain = audioCtx.createGain();
+                
+                osc.type = 'sawtooth';
+                osc.frequency.setValueAtTime(220, now);
+                osc.frequency.exponentialRampToValueAtTime(146.83, now + 0.35);
+                
+                gain.gain.setValueAtTime(0.15, now);
+                gain.gain.exponentialRampToValueAtTime(0.001, now + 0.35);
+                
+                osc.connect(gain);
+                gain.connect(audioCtx.destination);
+                
+                osc.start(now);
+                osc.stop(now + 0.35);
+            } catch (e) {
+                console.log(e);
+            }
+        }
+
+        // 自動組合混合單字庫（第一冊 + 第二冊 + 第三冊）
+        lessonsData.mixed = [...lessonsData.lesson1, ...lessonsData.lesson2, ...lessonsData.lesson3];
+
+        let currentLessonKey = 'lesson1';
+        let vocabList = lessonsData[currentLessonKey];
+
+        let selectedMode = 'choice';
+        let questionCount = 10;
+        let currentQuiz = [];
+        let currentIndex = 0;
+        let score = 0;
+        let userAnswers = [];
+        let answered = false;
+
+        function changeLesson(lessonKey) {
+            currentLessonKey = lessonKey;
+            vocabList = lessonsData[currentLessonKey];
+            
+            // 修正：完整切換四個按鈕的 active 狀態
+            document.getElementById('lesson1-btn').className = lessonKey === 'lesson1' ? 'lesson-btn active' : 'lesson-btn';
+            document.getElementById('lesson2-btn').className = lessonKey === 'lesson2' ? 'lesson-btn active' : 'lesson-btn';
+            document.getElementById('lesson3-btn').className = lessonKey === 'lesson3' ? 'lesson-btn active' : 'lesson-btn';
+            document.getElementById('mixed-btn').className = lessonKey === 'mixed' ? 'lesson-btn active' : 'lesson-btn';
+
+            const lessonNames = {
+                lesson1: "第一冊",
+                lesson2: "第二冊",
+                lesson3: "第三冊",
+                mixed: "綜合 (1-3冊)"           
+            };
+            
+            const subtitleEl = document.getElementById('current-lesson-subtitle');
+            if (subtitleEl) {
+                subtitleEl.innerText = `${lessonNames[lessonKey]}核心單字庫 (含音效)`;
+            }
+            document.getElementById('welcome-title').innerText = `${lessonNames[lessonKey]} 單字測驗`;
+            document.getElementById('review-title').innerText = `${lessonNames[lessonKey]}單字總複習`;
+                        
+            if(!document.getElementById('section-review').classList.contains('hidden')) {
+                renderVocabTable(vocabList);
+            }
+        }
+
+        function switchTab(tab) {
+            const btnQuiz = document.getElementById('tab-quiz');
+            const btnReview = document.getElementById('tab-review');
+            const secQuiz = document.getElementById('section-quiz');
+            const secReview = document.getElementById('section-review');
+
+            if (tab === 'quiz') {
+                btnQuiz.className = "tab-btn active";
+                btnReview.className = "tab-btn";
+                secQuiz.classList.remove('hidden');
+                secReview.classList.add('hidden');
+            } else {
+                btnReview.className = "tab-btn active";
+                btnQuiz.className = "tab-btn";
+                secReview.classList.remove('hidden');
+                secQuiz.classList.add('hidden');
+                renderVocabTable(vocabList);
+            }
+        }
+
+        function renderVocabTable(data) {
+            const tbody = document.getElementById('vocab-table-body');
+            tbody.innerHTML = '';
+            data.forEach(item => {
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td style="font-weight:700; color:#4338ca;">${item.word}</td>
+                    <td style="font-family:monospace; color:#64748b; font-size:12px;">${item.phonetic}</td>
+                    <td>${item.meaning}</td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+
+        function filterVocabList() {
+            const query = document.getElementById('vocab-search').value.toLowerCase();
+            const filtered = vocabList.filter(item => 
+                item.word.toLowerCase().includes(query) || 
+                item.meaning.toLowerCase().includes(query) ||
+                item.phonetic.toLowerCase().includes(query)
+            );
+            renderVocabTable(filtered);
+        }
+
+        function setQuizMode(mode) {
+            selectedMode = mode;
+            document.getElementById('mode-choice').className = mode === 'choice' ? 'option-btn selected' : 'option-btn';
+            document.getElementById('mode-spell').className = mode === 'spell' ? 'option-btn selected' : 'option-btn';
+        }
+
+        function setQuestionCount(count, el) {
+            questionCount = count;
+            document.querySelectorAll('.count-btn').forEach(b => b.classList.remove('selected'));
+            el.classList.add('selected');
+        }
+
+        function shuffleArray(array) {
+            let currentIndex = array.length, randomIndex;
+            while (currentIndex !== 0) {
+                randomIndex = Math.floor(Math.random() * currentIndex);
+                currentIndex--;
+                [array[currentIndex], array[randomIndex]] = [array[randomIndex], array[currentIndex]];
+            }
+            return array;
+        }
+
+        function startQuiz() {
+            if (window.innerWidth <= 768) {
+                document.body.classList.add('quiz-running');
+            }
+
+            score = 0;
+            currentIndex = 0;
+            userAnswers = [];
+            
+            const shuffled = shuffleArray([...vocabList]);
+            const actualCount = (questionCount === 'all') ? shuffled.length : Math.min(questionCount, shuffled.length);
+            
+            currentQuiz = shuffled.slice(0, actualCount).map(item => {
+                const otherOptions = vocabList.filter(v => v.word !== item.word);
+                const shuffledOthers = shuffleArray([...otherOptions]).slice(0, 3);
+                const options = shuffleArray([item.word, ...shuffledOthers.map(o => o.word)]);
+                return { ...item, options: options };
+            });
+
+            document.getElementById('total-questions-badge').innerText = actualCount;
+            document.getElementById('welcome-screen').classList.add('hidden');
+            document.getElementById('result-screen').classList.add('hidden');
+            document.getElementById('review-screen').classList.add('hidden');
+            document.getElementById('quiz-screen').classList.remove('hidden');
+            document.getElementById('score-badge').classList.remove('hidden');
+
+            loadQuestion();
+        }
+
+        function loadQuestion() {
+            answered = false;
+            const q = currentQuiz[currentIndex];
+            const total = currentQuiz.length;
+            const qNum = currentIndex + 1;
+
+            document.getElementById('question-progress').innerText = `題目 ${qNum} / ${total}`;
+            const percentage = Math.round((qNum / total) * 100);
+            document.getElementById('progress-percentage').innerText = `${percentage}%`;
+            document.getElementById('progress-bar').style.width = `${percentage}%`;
+            document.getElementById('current-score').innerText = score;
+
+            document.getElementById('question-phonetic').innerText = q.phonetic;
+            document.getElementById('question-meaning').innerText = q.meaning;
+
+            const choiceContainer = document.getElementById('options-container');
+            const spellContainer = document.getElementById('spell-container');
+
+            if (selectedMode === 'choice') {
+                choiceContainer.classList.remove('hidden');
+                spellContainer.classList.add('hidden');
+                choiceContainer.innerHTML = '';
+                
+                q.options.forEach((opt, idx) => {
+                    const btn = document.createElement('button');
+                    btn.className = "choice-item";
+                    btn.innerHTML = `<span><span class="choice-idx">${String.fromCharCode(65 + idx)}</span>${opt}</span>`;
+                    btn.onclick = () => selectOption(opt, btn, q.word);
+                    choiceContainer.appendChild(btn);
+                });
+            } else {
+                choiceContainer.classList.add('hidden');
+                spellContainer.classList.remove('hidden');
+                const spellInput = document.getElementById('spell-input');
+                spellInput.value = '';
+                spellInput.disabled = false;
+                spellInput.focus();
+                document.getElementById('spell-feedback').classList.add('hidden');
+            }
+
+            const nextBtn = document.getElementById('next-btn');
+            nextBtn.disabled = true;
+            nextBtn.style.background = "#e2e8f0";
+            nextBtn.style.color = "#94a3b8";
+            nextBtn.style.cursor = "not-allowed";
+        }
+
+        function selectOption(selectedOpt, selectedBtn, correctWord) {
+            if (answered) return;
+            answered = true;
+
+            const isCorrect = (selectedOpt === correctWord);
+            if (isCorrect) {
+                score++;
+                playCorrectSound();
+                selectedBtn.className = "choice-item correct";
+                selectedBtn.innerHTML += `<span style="color:#059669; font-weight:700;">✓ 正確</span>`;
+            } else {
+                playWrongSound();
+                selectedBtn.className = "choice-item wrong";
+                selectedBtn.innerHTML += `<span style="color:#dc2626; font-weight:700;">✕ 錯誤</span>`;
+                
+                const allBtns = document.getElementById('options-container').children;
+                for (let b of allBtns) {
+                    if (b.innerText.includes(correctWord)) {
+                        b.className = "choice-item correct";
+                        b.innerHTML += `<span style="color:#059669; font-weight:700;">正確答案</span>`;
+                    }
+                }
+            }
+
+            userAnswers.push({ question: currentQuiz[currentIndex], selected: selectedOpt, correct: correctWord, isCorrect: isCorrect });
+            document.getElementById('current-score').innerText = score;
+            enableNextButton();
+        }
+
+        function submitSpelling() {
+            if (answered) return;
+            const spellInput = document.getElementById('spell-input');
+            const userVal = spellInput.value.trim().toLowerCase();
+            if (!userVal) return;
+
+            answered = true;
+            spellInput.disabled = true;
+
+            const q = currentQuiz[currentIndex];
+            const isCorrect = (userVal === q.word.toLowerCase());
+
+            const feedback = document.getElementById('spell-feedback');
+            feedback.classList.remove('hidden');
+
+            if (isCorrect) {
+                score++;
+                playCorrectSound();
+                feedback.style.color = "#059669";
+                feedback.innerText = `✓ 答對了！正確答案是：${q.word}`;
+            } else {
+                playWrongSound();
+                feedback.style.color = "#dc2626";
+                feedback.innerText = `✕ 答錯了。正確答案為：${q.word}`;
+            }
+
+            userAnswers.push({ question: q, selected: spellInput.value.trim(), correct: q.word, isCorrect: isCorrect });
+            document.getElementById('current-score').innerText = score;
+            enableNextButton();
+        }
+
+        function enableNextButton() {
+            const nextBtn = document.getElementById('next-btn');
+            nextBtn.disabled = false;
+            nextBtn.style.background = "linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%)";
+            nextBtn.style.color = "white";
+            nextBtn.style.cursor = "pointer";
+            
+            if (currentIndex === currentQuiz.length - 1) {
+                nextBtn.innerText = "查看成績";
+            } else {
+                nextBtn.innerText = "下一題";
+            }
+        }
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter') {
+                if (selectedMode === 'spell' && !document.getElementById('spell-container').classList.contains('hidden') && !answered) {
+                    submitSpelling();
+                } else if (!document.getElementById('next-btn').disabled && !document.getElementById('quiz-screen').classList.contains('hidden')) {
+                    nextQuestion();
+                }
+            }
+        });
+
+        function nextQuestion() {
+            currentIndex++;
+            if (currentIndex < currentQuiz.length) {
+                loadQuestion();
+            } else {
+                showResult();
+            }
+        }
+
+        function showResult() {
+            document.getElementById('quiz-screen').classList.add('hidden');
+            document.getElementById('score-badge').classList.add('hidden');
+            document.getElementById('result-screen').classList.remove('hidden');
+
+            document.getElementById('final-score').innerText = score;
+            document.getElementById('final-total').innerText = `/ ${currentQuiz.length}`;
+
+            const reviewBtn = document.getElementById('review-btn');
+            const hasMistakes = userAnswers.some(a => !a.isCorrect);
+            if (hasMistakes) {
+                reviewBtn.classList.remove('hidden');
+            } else {
+                reviewBtn.classList.add('hidden');
+            }
+        }
+
+        function reviewMistakes() {
+            document.getElementById('result-screen').classList.add('hidden');
+            document.getElementById('review-screen').classList.remove('hidden');
+
+            const container = document.getElementById('mistakes-list');
+            container.innerHTML = '';
+
+            const mistakes = userAnswers.filter(a => !a.isCorrect);
+            mistakes.forEach(m => {
+                const div = document.createElement('div');
+                div.style.cssText = "background:#f8fafc; border:1px solid #e2e8f0; border-radius:14px; padding:14px; text-align:left;";
+                div.innerHTML = `
+                    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
+                        <span style="font-weight:700; font-size:16px; color:#1e293b;">${m.question.meaning}</span>
+                        <span style="background:#eef2ff; color:#4f46e5; padding:2px 8px; border-radius:6px; font-size:12px;">${m.question.phonetic}</span>
+                    </div>
+                    <div style="font-size:14px; display:flex; gap:16px;">
+                        <span style="color:#dc2626;">你的回答: <b>${m.selected || '(未填寫)'}</b></span>
+                        <span style="color:#059669;">正確答案: <b>${m.correct}</b></span>
+                    </div>
+                `;
+                container.appendChild(div);
+            });
+        }
+
+        function resetToWelcome() {
+            document.getElementById('result-screen').classList.add('hidden');
+            document.getElementById('review-screen').classList.add('hidden');
+            document.getElementById('welcome-screen').classList.remove('hidden');
+
+            document.body.classList.remove('quiz-running');
+        }
+    </script>
+</body>
+</html>
