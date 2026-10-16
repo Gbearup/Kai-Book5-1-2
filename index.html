@@ -16,15 +16,17 @@
                 </div>
                 <div class="logo-title">
                     <h1>國中B5英文單字測驗</h1>
-                    <p id="current-lesson-subtitle">第五冊U1-U2單字 (含音效)</p>
+                    <p id="current-lesson-subtitle">第五冊U3-U4單字 (含音效)</p>
                 </div>
             </div>
             <div class="header-nav" id="tab-menu">
-                <!-- 獨立的課程切換按鈕 (包含第一課、第二課、綜合測驗) -->
+                <!-- 獨立的課程切換按鈕 (包含第三課、第四課、綜合測驗) -->
                 <div class="lesson-group">
-                    <button onclick="changeLesson('lesson1')" id="lesson1-btn" class="lesson-btn active">第一課</button>
-                    <button onclick="changeLesson('lesson2')" id="lesson2-btn" class="lesson-btn">第二課</button>
-                    <button onclick="changeLesson('mixed')" id="mixed-btn" class="lesson-btn">綜合 (1+2課)</button>
+                    <!-- <button onclick="changeLesson('lesson1')" id="lesson1-btn" class="lesson-btn active">第一課</button> -->
+                    <!-- <button onclick="changeLesson('lesson2')" id="lesson2-btn" class="lesson-btn">第二課</button> -->
+                    <button onclick="changeLesson('lesson3')" id="lesson3-btn" class="lesson-btn">第三課</button>
+                    <button onclick="changeLesson('lesson4')" id="lesson4-btn" class="lesson-btn">第四課</button>
+                    <button onclick="changeLesson('mixed')" id="mixed-btn" class="lesson-btn">綜合 (3+4課)</button>
                 </div>
                 <!-- 模式切換按鈕 -->
                 <div class="tabs">
@@ -48,7 +50,7 @@
             <div id="welcome-screen" class="card">
                 <div class="welcome-icon">  <img src="quiz-icon.jfif" alt="測驗圖示" class="small-icon"> </div>
 
-                <h2 id="welcome-title">第五冊 第一課 單字測驗</h2>
+                <h2 id="welcome-title">第五冊 第三課 單字測驗</h2>
                 <!-- <p class="desc">請選擇測驗模式與題數：</p> -->
 
                 <div class="section-label">測驗模式</div>
@@ -124,7 +126,7 @@
 
         <div id="section-review" class="card hidden">
             <h2 id="review-title" style="margin-bottom:4px; text-align:left;">第五冊第一課單字總複習</h2>
-            <p class="desc" style="text-align:left; margin-bottom:16px;">完整收錄本課核心單字，可透過搜尋欄快速查找。</p>
+            <!-- <p class="desc" style="text-align:left; margin-bottom:16px;">完整收錄本課核心單字，可透過搜尋欄快速查找。</p> -->
             <input type="text" id="vocab-search" oninput="filterVocabList()" placeholder="搜尋英文單字或中文意思..." class="search-input">
             
             <div class="table-container">
@@ -220,9 +222,16 @@
         // 單字資料庫
         
         // 自動組合混合單字庫（第一課 + 第二課）
-        lessonsData.mixed = [...lessonsData.lesson1, ...lessonsData.lesson2];
+        lessonsData.mixed = [
+                                // ...lessonsData.lesson1, 
+                                //...lessonsData.lesson2, 
+                             ...lessonsData.lesson3, 
+                             ...lessonsData.lesson4
+                        
+                            
+                            ];
 
-        let currentLessonKey = 'lesson1';
+        let currentLessonKey = 'lesson3';
         let vocabList = lessonsData[currentLessonKey];
 
         let selectedMode = 'choice';
@@ -238,15 +247,19 @@
             vocabList = lessonsData[currentLessonKey];
             
             // 切換按鈕樣式
-            document.getElementById('lesson1-btn').className = lessonKey === 'lesson1' ? 'lesson-btn active' : 'lesson-btn';
-            document.getElementById('lesson2-btn').className = lessonKey === 'lesson2' ? 'lesson-btn active' : 'lesson-btn';
+            // document.getElementById('lesson1-btn').className = lessonKey === 'lesson1' ? 'lesson-btn active' : 'lesson-btn';
+            // document.getElementById('lesson2-btn').className = lessonKey === 'lesson2' ? 'lesson-btn active' : 'lesson-btn';
+            document.getElementById('lesson3-btn').className = lessonKey === 'lesson3' ? 'lesson-btn active' : 'lesson-btn';
+            document.getElementById('lesson4-btn').className = lessonKey === 'lesson4' ? 'lesson-btn active' : 'lesson-btn';
             document.getElementById('mixed-btn').className = lessonKey === 'mixed' ? 'lesson-btn active' : 'lesson-btn';
 
             const lessonNames = {
-                lesson1: "第五冊 第一課",
-                lesson2: "第五冊 第二課",
-                mixed: "第五冊 綜合 (1+2課)"           
-                
+                // lesson1: "第五冊 第一課",
+                // lesson2: "第五冊 第二課",
+                lesson3: "第五冊 第三課",
+                lesson4: "第五冊 第四課",
+                // mixed: "第五冊 綜合 (1+2課)"           
+                mixed: "第五冊 綜合 (3+4課)"
             };
             
             document.getElementById('current-lesson-subtitle').innerText = `${lessonNames[lessonKey]}核心單字庫 (含音效)`;
