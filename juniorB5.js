@@ -64,7 +64,7 @@ const lessonsData = {
             // ],
 
             
-            lesson3: [
+            lesson4: [
                 { word: "create", phonetic: "[krɪ`et]", meaning: "v. 創造" },
   { word: "dictionary", phonetic: "[`dɪkʃənˌɛrɪ]", meaning: "n. 字典" },
   { word: "case", phonetic: "[kes]", meaning: "n. 實例" },
@@ -92,7 +92,7 @@ const lessonsData = {
   { word: "pain", phonetic: "[pen]", meaning: "n. 疼痛；痛苦" },
   { word: "pray", phonetic: "[pre]", meaning: "v. 祈禱" }
             ],
-            lesson4: [
+            lesson3: [
                 { word: "form", phonetic: "[fɔrm]", meaning: "v. 形成" },
   { word: "childhood", phonetic: "[`tʃaɪldˌhʊd]", meaning: "n. 童年" },
   { word: "relative", phonetic: "[`rɛlətɪv]", meaning: "n. 親戚" },
