@@ -1,0 +1,593 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>國一英文文法BOOK1總複習與小測驗</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            background-color: #f8fafc;
+        }
+        .tab-btn.active {
+            border-bottom-color: #3b82f6;
+            color: #2563eb;
+            font-weight: 600;
+        }
+        .gram-formula {
+            background-color: #f1f5f9;
+            border-left: 4px solid #3b82f6;
+        }
+    </style>
+</head>
+<body class="text-slate-800 min-h-screen flex flex-col justify-between">
+
+    <!-- Navigation Header -->
+    <header class="bg-white border-b border-slate-200 sticky top-0 z-30 shadow-sm">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center space-x-3">
+                    <div class="bg-blue-600 text-white p-2 rounded-lg shadow">
+                        <i data-lucide="book-open" class="w-6 h-6"></i>
+                    </div>
+                    <div>
+                        <h1 class="text-xl font-bold text-slate-900 leading-tight">國一英文文法BOOK1總複習</h1>
+                        <p class="text-xs text-slate-500">On Target 系列單元核心觀念精華</p>
+                    </div>
+                </div>
+                <div class="hidden sm:block text-sm font-medium text-slate-500">
+                    國中英語 Core Grammar Review
+                </div>
+            </div>
+            
+            <!-- Navigation Tabs -->
+            <nav class="flex space-x-8 -mb-px overflow-x-auto">
+                <button onclick="switchTab('review')" id="tab-review" class="tab-btn active py-3 px-1 border-b-2 border-transparent font-medium text-sm flex items-center space-x-2 whitespace-nowrap text-slate-600 hover:text-blue-600">
+                    <i data-lucide="file-text" class="w-4 h-4"></i>
+                    <span>文法重點總複習</span>
+                </button>
+                <button onclick="switchTab('vocab')" id="tab-vocab" class="tab-btn py-3 px-1 border-b-2 border-transparent font-medium text-sm flex items-center space-x-2 whitespace-nowrap text-slate-600 hover:text-blue-600">
+                    <i data-lucide="list-todo" class="w-4 h-4"></i>
+                    <span>核心單字與慣用語</span>
+                </button>
+                <button onclick="switchTab('quiz')" id="tab-quiz" class="tab-btn py-3 px-1 border-b-2 border-transparent font-medium text-sm flex items-center space-x-2 whitespace-nowrap text-slate-600 hover:text-blue-600">
+                    <i data-lucide="award" class="w-4 h-4"></i>
+                    <span>文法隨堂小測驗</span>
+                </button>
+                <button onclick="location.href='index.html'" class="tab-btn">📚 第5冊</button>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Main Content Container -->
+    <main class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8 flex-grow w-full">
+
+        <!-- ================= TAB 1: GRAMMAR REVIEW ================= -->
+        <section id="content-review" class="space-y-8">
+            <!-- Intro Banner -->
+            <div class="bg-gradient-to-r from-blue-600 to-indigo-600 rounded-2xl p-6 text-white shadow-md">
+                <h2 class="text-2xl font-bold mb-2">國一核心文法重點整理</h2>
+                <p class="text-blue-100 text-sm sm:text-base">含 be 動詞句型、祈使句、Where與地點介系詞、There is/are 存在句、現在進行式、時間詢問與助動詞 Can 的詳細結構解析與例句。</p>
+            </div>
+
+            <!-- Grammar Cards Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                
+                <!-- Card 1: be 動詞與問句 -->
+                <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-6 flex flex-col justify-between hover:shadow-md transition">
+                    <div>
+                        <div class="flex items-center space-x-2 mb-3">
+                            <span class="bg-blue-100 text-blue-800 text-xs font-semibold px-2.5 py-0.5 rounded">重點 1</span>
+                            <h3 class="text-lg font-bold text-slate-900">be 動詞句型與 Who 疑問句</h3>
+                        </div>
+                        <div class="gram-formula p-3 rounded-lg text-sm font-medium mb-3 text-slate-700">
+                            公式：<br>
+                            1. Be + 主詞 + a/an/所有格 + 單數名詞? <br>
+                            &nbsp;&nbsp;&nbsp;➔ Yes, 主詞 + be. / No, 代名詞 + be + not.<br>
+                            2. Who + be + 主詞? ➔ 主詞 + be + 姓名/關係.
+                        </div>
+                        <div class="space-y-2 text-sm text-slate-600">
+                            <p class="p-2 bg-slate-50 rounded"><strong>例 1：</strong> A: Is Julie a singer? <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;B: No, she's not. (不，她不是。)</p>
+                            <p class="p-2 bg-slate-50 rounded"><strong>例 2：</strong> A: Is Eva a cute girl? <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;B: Yes, she is. (是的，她是。)</p>
+                            <p class="p-2 bg-slate-50 rounded"><strong>例 3：</strong> A: Who is that boy? <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;B: He is Noah. (他是 Noah。)</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card 2: 指示代名詞與 What 問句 -->
+                <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-6 flex flex-col justify-between hover:shadow-md transition">
+                    <div>
+                        <div class="flex items-center space-x-2 mb-3">
+                            <span class="bg-green-100 text-green-800 text-xs font-semibold px-2.5 py-0.5 rounded">重點 2</span>
+                            <h3 class="text-lg font-bold text-slate-900">指示代名詞 (This/That/These/Those)</h3>
+                        </div>
+                        <div class="gram-formula p-3 rounded-lg text-sm font-medium mb-3 text-slate-700">
+                            公式：<br>
+                            1. What + is + this / that / it? ➔ This / That / It + is + 冠詞 + 單數名詞.<br>
+                            2. What + are + these / those / they? ➔ These / Those / They + are + 複數名詞.
+                        </div>
+                        <div class="space-y-2 text-sm text-slate-600">
+                            <p class="p-2 bg-slate-50 rounded"><strong>例 1：</strong> A: What is that? <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;B: That / It is an eraser. (那是一個橡皮擦。)</p>
+                            <p class="p-2 bg-slate-50 rounded"><strong>例 2：</strong> A: What are these? <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;B: These / They are tigers. (這些是老虎。)</p>
+                            <p class="p-2 bg-slate-50 rounded"><strong>句型擴充：</strong> What about the blue dress? (這件藍色洋裝怎麼樣？) ➔ It's so cool.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card 3: 祈使句與 Let's -->
+                <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-6 flex flex-col justify-between hover:shadow-md transition">
+                    <div>
+                        <div class="flex items-center space-x-2 mb-3">
+                            <span class="bg-purple-100 text-purple-800 text-xs font-semibold px-2.5 py-0.5 rounded">重點 3</span>
+                            <h3 class="text-lg font-bold text-slate-900">祈使句與 Let's 提議句型</h3>
+                        </div>
+                        <div class="gram-formula p-3 rounded-lg text-sm font-medium mb-3 text-slate-700">
+                            公式：<br>
+                            1. (Don't +) 原形動詞...<br>
+                            2. Please + 原形動詞, 人名. / 人名, please + 原形動詞.<br>
+                            3. Let's (+ not) + 原形動詞...
+                        </div>
+                        <div class="space-y-2 text-sm text-slate-600">
+                            <p class="p-2 bg-slate-50 rounded"><strong>例 1：</strong> Come here. (過來這裡。) / Don't be sad. (不要難過。)</p>
+                            <p class="p-2 bg-slate-50 rounded"><strong>例 2：</strong> Please be quiet, Sam. = Sam, please be quiet. (Sam，請安靜。)</p>
+                            <p class="p-2 bg-slate-50 rounded"><strong>例 3：</strong> Let's go to the zoo. (我們去動物園吧。)<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Let's not upload the photos. (我們不要上傳照片吧。)</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card 4: Where 疑問句與介系詞 -->
+                <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-6 flex flex-col justify-between hover:shadow-md transition">
+                    <div>
+                        <div class="flex items-center space-x-2 mb-3">
+                            <span class="bg-amber-100 text-amber-800 text-xs font-semibold px-2.5 py-0.5 rounded">重點 4</span>
+                            <h3 class="text-lg font-bold text-slate-900">Where 疑問句與介系詞</h3>
+                        </div>
+                        <div class="gram-formula p-3 rounded-lg text-sm font-medium mb-3 text-slate-700">
+                            公式：<br>
+                            1. Where + be + 主詞?<br>
+                            2. 主詞 + be + 介系詞 + the / 所有格 + 名詞.
+                        </div>
+                        <div class="space-y-2 text-sm text-slate-600">
+                            <p class="p-2 bg-slate-50 rounded"><strong>例句：</strong><br>A: Where is my blanket? (我的毛毯在哪裡？)<br>B: It is on the bed. (它在床上。)</p>
+                            <p class="p-2 bg-slate-50 rounded text-xs text-slate-500">
+                                💡 常見介系詞：in (在...裡面), on (在...上面), under (在...下面), in front of (在...前面)
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card 5: There is / There are 存在句 -->
+                <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-6 flex flex-col justify-between hover:shadow-md transition">
+                    <div>
+                        <div class="flex items-center space-x-2 mb-3">
+                            <span class="bg-rose-100 text-rose-800 text-xs font-semibold px-2.5 py-0.5 rounded">重點 5</span>
+                            <h3 class="text-lg font-bold text-slate-900">There is / There are (存在句型)</h3>
+                        </div>
+                        <div class="gram-formula p-3 rounded-lg text-sm font-medium mb-3 text-slate-700">
+                            公式：<br>
+                            肯定：There is + a(n) 單數名詞 / There are + 數字/some + 複數名詞.<br>
+                            否定：There isn't + a(n) 名詞 / There aren't + 數字/any + 複數名詞.<br>
+                            問句：Is / Are there + any + 名詞 + 地點?
+                        </div>
+                        <div class="space-y-2 text-sm text-slate-600">
+                            <p class="p-2 bg-slate-50 rounded"><strong>例 1：</strong> There is a blanket on the bed. / There are some books on the desk.</p>
+                            <p class="p-2 bg-slate-50 rounded"><strong>例 2：</strong> There isn't a polar bear in the zoo. / There aren't any students in the classroom.</p>
+                            <p class="p-2 bg-slate-50 rounded"><strong>例 3：</strong> A: Are there any children on the sports field? <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;B: Yes, there are.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card 6: 現在進行式與時間詢問 -->
+                <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-6 flex flex-col justify-between hover:shadow-md transition">
+                    <div>
+                        <div class="flex items-center space-x-2 mb-3">
+                            <span class="bg-teal-100 text-teal-800 text-xs font-semibold px-2.5 py-0.5 rounded">重點 6</span>
+                            <h3 class="text-lg font-bold text-slate-900">現在進行式 & 時間與星期詢問</h3>
+                        </div>
+                        <div class="gram-formula p-3 rounded-lg text-sm font-medium mb-3 text-slate-700">
+                            公式：<br>
+                            1. Be + 主詞 + V-ing? ➔ Yes, 主詞 + be. / No, 主詞 + be + not.<br>
+                            2. What + be + 主詞 + doing? ➔ 主詞 + be + V-ing.<br>
+                            3. What time + is + 主詞? ➔ It is at + 時間.<br>
+                            4. What day + is + 主詞? ➔ It is on + 星期.
+                        </div>
+                        <div class="space-y-2 text-sm text-slate-600">
+                            <p class="p-2 bg-slate-50 rounded"><strong>例 1：</strong> Is Jennifer reading? ➔ No, she is not.</p>
+                            <p class="p-2 bg-slate-50 rounded"><strong>例 2：</strong> What is Leo doing? ➔ He is cooking. (他正在煮飯。)</p>
+                            <p class="p-2 bg-slate-50 rounded"><strong>例 3：</strong> What time is the English class? ➔ It's at ten o'clock.</p>
+                            <p class="p-2 bg-slate-50 rounded"><strong>例 4：</strong> What day is the group chat? ➔ It is on Tuesday.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card 7: 助動詞 Can 句型 -->
+                <div class="bg-white rounded-xl md:col-span-2 shadow-sm border border-slate-200 p-6 hover:shadow-md transition">
+                    <div class="flex items-center space-x-2 mb-3">
+                        <span class="bg-indigo-100 text-indigo-800 text-xs font-semibold px-2.5 py-0.5 rounded">重點 7</span>
+                        <h3 class="text-lg font-bold text-slate-900">助動詞 Can 的用法</h3>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div class="gram-formula p-3 rounded-lg text-sm font-medium text-slate-700">
+                            公式：<br>
+                            1. Can + 主詞 + 原形動詞...? <br>
+                            &nbsp;&nbsp;&nbsp;➔ Yes, 主詞 + can. / No, 主詞 + can't.<br>
+                            2. What + can + 主詞 + 原形動詞...? ➔ 主詞 + can + 原形動詞.
+                        </div>
+                        <div class="space-y-2 text-sm text-slate-600">
+                            <p class="p-2 bg-slate-50 rounded"><strong>例 1：</strong> A: Can your cat shake hands? (你的貓會握手嗎？)<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;B: No, it can't. (不，牠不會。)</p>
+                            <p class="p-2 bg-slate-50 rounded"><strong>例 2：</strong> A: What can Juliet do? (Juliet 會做什麼？)<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;B: She can take photos. (她會拍照。)</p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- ================= TAB 2: VOCABULARY & PHRASES ================= -->
+        <section id="content-vocab" class="hidden space-y-6">
+            <!-- Search / Filter bar -->
+            <div class="bg-white p-4 rounded-xl shadow-sm border border-slate-200 flex flex-col sm:flex-row justify-between items-center gap-4">
+                <div class="relative w-full sm:w-80">
+                    <i data-lucide="search" class="w-5 h-5 absolute left-3 top-1/2 transform -translate-y-1/2 text-slate-400"></i>
+                    <input type="text" id="vocab-search" oninput="filterVocab()" placeholder="搜尋單字、片語或中文..." class="w-full pl-10 pr-4 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm">
+                </div>
+                <div class="flex space-x-2 w-full sm:w-auto overflow-x-auto">
+                    <button onclick="filterCategory('all')" class="cat-btn active px-3 py-1.5 text-xs font-semibold rounded-lg bg-blue-600 text-white">全部</button>
+                    <button onclick="filterCategory('phrase')" class="cat-btn px-3 py-1.5 text-xs font-semibold rounded-lg bg-slate-100 text-slate-600 hover:bg-slate-200">重點片語 / 慣用語</button>
+                    <button onclick="filterCategory('word')" class="cat-btn px-3 py-1.5 text-xs font-semibold rounded-lg bg-slate-100 text-slate-600 hover:bg-slate-200">考焦點單字</button>
+                </div>
+            </div>
+
+            <!-- Vocabulary Cards List -->
+            <div id="vocab-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                <!-- Dynamically populated via JS -->
+            </div>
+        </section>
+
+        <!-- ================= TAB 3: GRAMMAR QUIZ ================= -->
+        <section id="content-quiz" class="hidden space-y-6">
+            <!-- Quiz Card Header -->
+            <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200 text-center max-w-2xl mx-auto">
+                <div class="inline-flex p-3 bg-blue-50 text-blue-600 rounded-full mb-3">
+                    <i data-lucide="help-circle" class="w-8 h-8"></i>
+                </div>
+                <h2 class="text-2xl font-bold text-slate-900 mb-1">國一文法實力測驗</h2>
+                <p class="text-sm text-slate-500 mb-4">測試你對 be 動詞、祈使句、There is/are、現在進行式等句型的掌握度！</p>
+                <div class="flex justify-center space-x-6 text-sm text-slate-600">
+                    <div><span class="font-bold text-blue-600" id="quiz-count">10</span> 題測驗</div>
+                    <div>即時答題解析</div>
+                </div>
+            </div>
+
+            <!-- Quiz Questions Container -->
+            <div id="quiz-container" class="max-w-2xl mx-auto space-y-6">
+                <!-- Question Cards populated via JS -->
+            </div>
+
+            <!-- Quiz Result Summary Card -->
+            <div id="quiz-result" class="hidden max-w-2xl mx-auto bg-white p-8 rounded-2xl shadow-md border border-slate-200 text-center space-y-4">
+                <div class="inline-flex p-4 rounded-full bg-emerald-100 text-emerald-600">
+                    <i data-lucide="trophy" class="w-12 h-12"></i>
+                </div>
+                <h3 class="text-2xl font-bold text-slate-900">測驗完成！</h3>
+                <p class="text-4xl font-extrabold text-blue-600" id="score-text">0 / 10</p>
+                <p class="text-sm text-slate-600" id="feedback-text">做得好！繼續保持學習！</p>
+                <button onclick="resetQuiz()" class="px-6 py-2.5 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-700 transition inline-flex items-center space-x-2">
+                    <i data-lucide="rotate-ccw" class="w-4 h-4"></i>
+                    <span>重新測驗</span>
+                </button>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-white border-t border-slate-200 py-6 text-center text-xs text-slate-500">
+        <div class="max-w-6xl mx-auto px-4">
+            國一英語文法複習總彙整 &copy; 2026 On Target Study Guide
+        </div>
+    </footer>
+
+    <!-- JavaScript Logic -->
+    <script>
+        // Initialize Icons
+        lucide.createIcons();
+
+        // Vocab Data Extracted from Images
+        const vocabData = [
+            // Phrases / Expressions
+            { english: "in fact", chinese: "事實上", category: "phrase", example: "In fact, dolphins are smart." },
+            { english: "no wonder", chinese: "難怪", category: "phrase", example: "No wonder she is happy." },
+            { english: "What about...?", chinese: "……怎麼樣？", category: "phrase", example: "What about the blue dress?" },
+            { english: "Hurry up.", chinese: "快一點。", category: "phrase", example: "Hurry up. We are late." },
+            { english: "by the way", chinese: "順帶一提", category: "phrase", example: "By the way, there's a meeting today." },
+            { english: "show... around", chinese: "帶……參觀", category: "phrase", example: "Liz can show you around the building." },
+            { english: "watch out", chinese: "小心；注意", category: "phrase", example: "Watch out! There's a big dog!" },
+            { english: "Guess what?", chinese: "你猜怎麼著？", category: "phrase", example: "Guess what? Ian bought a new car." },
+            { english: "take a photo", chinese: "拍照", category: "phrase", example: "Can we take a photo here?" },
+            { english: "Nice to meet you.", chinese: "很高興認識你。", category: "phrase", example: "Nice to meet you, Alice." },
+
+            // Vocabulary Words
+            { english: "living room", chinese: "客廳", category: "word", example: "He is in the living room." },
+            { english: "bedroom", chinese: "臥室", category: "word", example: "My bed is in the bedroom." },
+            { english: "bathroom", chinese: "浴室", category: "word", example: "Where is the bathroom?" },
+            { english: "dining room", chinese: "飯廳", category: "word", example: "They eat dinner in the dining room." },
+            { english: "quiet", chinese: "安靜的", category: "word", example: "Please be quiet." },
+            { english: "smartphone", chinese: "智慧型手機", category: "word", example: "She has a new smartphone." },
+            { english: "monkey", chinese: "猴子", category: "word", example: "Look at the monkey in the tree." },
+            { english: "sheep", chinese: "綿羊 (單複數同形)", category: "word", example: "There are five sheep on the farm." },
+            { english: "tiger", chinese: "老虎", category: "word", example: "They are tigers." },
+            { english: "mouse / mice", chinese: "老鼠 (單數/複數)", category: "word", example: "The cat is chasing mice." },
+            { english: "smart", chinese: "聰明的", category: "word", example: "Dolphins are smart." },
+            { english: "family", chinese: "家人；家庭", category: "word", example: "I love my family." },
+            { english: "husband", chinese: "丈夫", category: "word", example: "He is her husband." },
+            { english: "wife", chinese: "妻子", category: "word", example: "She is his wife." },
+            { english: "cousin", chinese: "堂(表)兄弟姊妹", category: "word", example: "Tom is my cousin." },
+            { english: "birthday", chinese: "生日", category: "word", example: "Today is Kate's birthday." },
+            { english: "restroom", chinese: "廁所", category: "word", example: "Where is the restroom?" },
+            { english: "playground", chinese: "遊樂場", category: "word", example: "The kids are in the playground." },
+            { english: "building", chinese: "建築物", category: "word", example: "Look at that large building." },
+            { english: "download", chinese: "下載", category: "word", example: "Let's download the game." }
+        ];
+
+        // Quiz Questions Data based on image material
+        const quizQuestions = [
+            {
+                id: 1,
+                question: "A: ________ is my blanket?\nB: It is on the bed.",
+                options: ["What", "Where", "Who", "How"],
+                answer: 1,
+                explanation: "詢問物品位置（在哪裡）使用疑問詞 Where。"
+            },
+            {
+                id: 2,
+                question: "Sam, please ________ quiet during the test.",
+                options: ["is", "are", "be", "do"],
+                answer: 2,
+                explanation: "祈使句中，Please 接原形動詞。be 動詞的原形即為 be。"
+            },
+            {
+                id: 3,
+                question: "Let's ________ upload the photos onto the internet.",
+                options: ["don't", "not", "not to", "aren't"],
+                answer: 1,
+                explanation: "Let's 的否定句型為「Let's + not + 原形動詞...」。"
+            },
+            {
+                id: 4,
+                question: "A: What ________ these?\nB: They are tigers.",
+                options: ["is", "am", "are", "be"],
+                answer: 2,
+                explanation: "主詞 these 是複數，be 動詞要用 are。"
+            },
+            {
+                id: 5,
+                question: "There ________ any polar bears in the zoo.",
+                options: ["is", "are", "isn't", "aren't"],
+                answer: 3,
+                explanation: "名詞 polar bears 是複數，且有 any 表示否定，故填 aren't。"
+            },
+            {
+                id: 6,
+                question: "A: Is Jennifer ________ a book?\nB: No, she is cooking.",
+                options: ["read", "reads", "reading", "is reading"],
+                answer: 2,
+                explanation: "現在進行式問句公式：Be + 主詞 + V-ing? 故選 reading。"
+            },
+            {
+                id: 7,
+                question: "A: What time is the meeting?\nB: It is ________ ten o'clock.",
+                options: ["in", "on", "at", "for"],
+                answer: 2,
+                explanation: "表達具體「時刻點」前使用介系詞 at (at ten o'clock)。"
+            },
+            {
+                id: 8,
+                question: "A: What day is the group chat?\nB: It is ________ Tuesday.",
+                options: ["in", "on", "at", "by"],
+                answer: 1,
+                explanation: "表達「星期幾」前面使用介系詞 on (on Tuesday)。"
+            },
+            {
+                id: 9,
+                question: "A: ________ is that boy?\nB: He is Noah.",
+                options: ["What", "Who", "Where", "How"],
+                answer: 1,
+                explanation: "回答是人名（Noah），代表前句詢問「是誰」，選 Who。"
+            },
+            {
+                id: 10,
+                question: "A: Can your cat shake hands?\nB: No, it ________.",
+                options: ["can", "can't", "isn't", "doesn't"],
+                answer: 1,
+                explanation: "以 Can 開頭提問，簡答時否定用 No, 主詞 + can't."
+            }
+        ];
+
+        let currentCategory = 'all';
+        let userAnswers = {};
+
+        // Tab Switching Function
+        function switchTab(tabName) {
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            document.getElementById(`tab-${tabName}`).classList.add('active');
+
+            document.getElementById('content-review').classList.add('hidden');
+            document.getElementById('content-vocab').classList.add('hidden');
+            document.getElementById('content-quiz').classList.add('hidden');
+
+            document.getElementById(`content-${tabName}`).classList.remove('hidden');
+
+            if (tabName === 'vocab') {
+                renderVocab();
+            } else if (tabName === 'quiz') {
+                renderQuiz();
+            }
+        }
+
+        // Render Vocabulary Flashcards
+        function renderVocab() {
+            const grid = document.getElementById('vocab-grid');
+            const searchVal = document.getElementById('vocab-search').value.toLowerCase();
+
+            const filtered = vocabData.filter(item => {
+                const matchesCat = currentCategory === 'all' || item.category === currentCategory;
+                const matchesSearch = item.english.toLowerCase().includes(searchVal) || item.chinese.includes(searchVal);
+                return matchesCat && matchesSearch;
+            });
+
+            if (filtered.length === 0) {
+                grid.innerHTML = `<div class="col-span-full text-center py-8 text-slate-400">找不到符合的單字或片語</div>`;
+                return;
+            }
+
+            grid.innerHTML = filtered.map(item => `
+                <div class="bg-white p-4 rounded-xl shadow-sm border border-slate-200 flex flex-col justify-between hover:border-blue-300 transition">
+                    <div>
+                        <div class="flex justify-between items-start mb-2">
+                            <h4 class="font-bold text-lg text-slate-900">${item.english}</h4>
+                            <span class="text-xs font-medium px-2 py-0.5 rounded ${item.category === 'phrase' ? 'bg-indigo-100 text-indigo-700' : 'bg-slate-100 text-slate-600'}">
+                                ${item.category === 'phrase' ? '慣用語' : '核心單字'}
+                            </span>
+                        </div>
+                        <p class="text-slate-600 text-sm mb-3 font-medium">${item.chinese}</p>
+                    </div>
+                    <div class="text-xs bg-slate-50 p-2 rounded text-slate-500 italic">
+                        "${item.example}"
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function filterCategory(cat) {
+            currentCategory = cat;
+            document.querySelectorAll('.cat-btn').forEach(btn => {
+                btn.classList.remove('bg-blue-600', 'text-white');
+                btn.classList.add('bg-slate-100', 'text-slate-600');
+            });
+            event.currentTarget.classList.remove('bg-slate-100', 'text-slate-600');
+            event.currentTarget.classList.add('bg-blue-600', 'text-white');
+            renderVocab();
+        }
+
+        function filterVocab() {
+            renderVocab();
+        }
+
+        // Render Quiz Questions
+        function renderQuiz() {
+            const container = document.getElementById('quiz-container');
+            container.innerHTML = quizQuestions.map((q, idx) => `
+                <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-200 space-y-4" id="q-card-${q.id}">
+                    <div class="flex items-start space-x-3">
+                        <span class="bg-blue-100 text-blue-800 text-xs font-bold px-2.5 py-1 rounded-full">${idx + 1}</span>
+                        <p class="text-base font-semibold text-slate-900 whitespace-pre-line">${q.question}</p>
+                    </div>
+                    
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 pt-2">
+                        ${q.options.map((opt, optIdx) => `
+                            <button onclick="selectAnswer(${q.id}, ${optIdx})" 
+                                id="opt-${q.id}-${optIdx}"
+                                class="quiz-opt-btn p-3 rounded-lg border border-slate-200 text-left text-sm font-medium hover:bg-slate-50 transition flex items-center justify-between">
+                                <span>(${String.fromCharCode(65 + optIdx)}) ${opt}</span>
+                                <i data-lucide="circle" class="w-4 h-4 text-slate-300 opt-icon"></i>
+                            </button>
+                        `).join('')}
+                    </div>
+
+                    <!-- Explanation banner -->
+                    <div id="explain-${q.id}" class="hidden mt-3 p-3 rounded-lg text-xs leading-relaxed"></div>
+                </div>
+            `).join('') + `
+                <div class="text-center pt-4">
+                    <button onclick="submitQuiz()" class="px-8 py-3 bg-blue-600 text-white font-bold rounded-xl shadow-md hover:bg-blue-700 transition">
+                        送出答案並計算成績
+                    </button>
+                </div>
+            `;
+            lucide.createIcons();
+        }
+
+        function selectAnswer(qId, optIdx) {
+            userAnswers[qId] = optIdx;
+
+            // Reset option styling for this question
+            document.querySelectorAll(`#q-card-${qId} .quiz-opt-btn`).forEach(btn => {
+                btn.classList.remove('border-blue-600', 'bg-blue-50', 'text-blue-900');
+                btn.classList.add('border-slate-200');
+            });
+
+            // Highlight selected option
+            const selectedBtn = document.getElementById(`opt-${qId}-${optIdx}`);
+            selectedBtn.classList.remove('border-slate-200');
+            selectedBtn.classList.add('border-blue-600', 'bg-blue-50', 'text-blue-900');
+        }
+
+        function submitQuiz() {
+            let score = 0;
+
+            quizQuestions.forEach(q => {
+                const userAns = userAnswers[q.id];
+                const explainDiv = document.getElementById(`explain-${q.id}`);
+                explainDiv.classList.remove('hidden');
+
+                if (userAns === q.answer) {
+                    score++;
+                    explainDiv.className = "mt-3 p-3 rounded-lg text-xs bg-emerald-50 text-emerald-800 border border-emerald-200";
+                    explainDiv.innerHTML = `<strong>解析正確！</strong> ${q.explanation}`;
+                } else {
+                    explainDiv.className = "mt-3 p-3 rounded-lg text-xs bg-rose-50 text-rose-800 border border-rose-200";
+                    explainDiv.innerHTML = `<strong>解答：(${String.fromCharCode(65 + q.answer)})</strong> ${q.explanation}`;
+                }
+
+                // Highlight correct/incorrect options visually
+                q.options.forEach((_, optIdx) => {
+                    const btn = document.getElementById(`opt-${q.id}-${optIdx}`);
+                    btn.onclick = null; // Disable further clicking
+                    if (optIdx === q.answer) {
+                        btn.classList.add('bg-emerald-100', 'border-emerald-500', 'text-emerald-900');
+                    } else if (userAns === optIdx && userAns !== q.answer) {
+                        btn.classList.add('bg-rose-100', 'border-rose-500', 'text-rose-900');
+                    }
+                });
+            });
+
+            // Display Score Summary
+            const resultBox = document.getElementById('quiz-result');
+            const scoreText = document.getElementById('score-text');
+            const feedbackText = document.getElementById('feedback-text');
+
+            scoreText.textContent = `${score * 10} 分 (${score} / ${quizQuestions.length})`;
+
+            if (score === 10) {
+                feedbackText.textContent = "太厲害了！你完全掌握了所有的國一文法觀念！";
+            } else if (score >= 7) {
+                feedbackText.textContent = "表現很好！檢視一下答錯的題目，複習相關觀念會更棒！";
+            } else {
+                feedbackText.textContent = "再接再厲！建議回到「文法總複習」分頁仔細研讀句型公式喔！";
+            }
+
+            resultBox.classList.remove('hidden');
+            resultBox.scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function resetQuiz() {
+            userAnswers = {};
+            document.getElementById('quiz-result').classList.add('hidden');
+            renderQuiz();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // Initial setup
+        window.onload = function() {
+            renderVocab();
+        };
+    </script>
+</body>
+</html>

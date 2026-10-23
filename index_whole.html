@@ -25,6 +25,7 @@
                     <button onclick="changeLesson('lesson2')" id="lesson2-btn" class="lesson-btn">第二冊</button>
                     <button onclick="changeLesson('lesson3')" id="lesson3-btn" class="lesson-btn">第三冊</button>
                     <button onclick="changeLesson('mixed')" id="mixed-btn" class="lesson-btn">綜合</button>
+                    <button onclick="location.href='grammer_B1.html'" class="tab-btn">第一冊文法</button>
                 </div>
                 <!-- 模式切換按鈕 -->
                 <div class="tabs">
@@ -48,6 +49,10 @@
                 <div class="welcome-icon">  <img src="quiz-icon.jfif" alt="測驗圖示 style="width: 25px; height: 25px; class="small-icon"> </div>
 
                 <h2 id="welcome-title">第一冊 單字測驗</h2>
+                    <div id="current-lesson-subtitle" style="font-size: 14px; color: #64748b; font-weight: 600; margin-top: -8px; margin-bottom: 16px;">
+                        第一冊 核心單字庫
+                    </div>
+
 
                 <div class="section-label">測驗模式</div>
                 <div class="grid-2">
@@ -231,30 +236,74 @@
             currentLessonKey = lessonKey;
             vocabList = lessonsData[currentLessonKey];
             
-            // 修正：完整切換四個按鈕的 active 狀態
-            document.getElementById('lesson1-btn').className = lessonKey === 'lesson1' ? 'lesson-btn active' : 'lesson-btn';
-            document.getElementById('lesson2-btn').className = lessonKey === 'lesson2' ? 'lesson-btn active' : 'lesson-btn';
-            document.getElementById('lesson3-btn').className = lessonKey === 'lesson3' ? 'lesson-btn active' : 'lesson-btn';
-            document.getElementById('mixed-btn').className = lessonKey === 'mixed' ? 'lesson-btn active' : 'lesson-btn';
+            // // 修正：完整切換四個按鈕的 active 狀態
+            // document.getElementById('lesson1-btn').className = lessonKey === 'lesson1' ? 'lesson-btn active' : 'lesson-btn';
+            // document.getElementById('lesson2-btn').className = lessonKey === 'lesson2' ? 'lesson-btn active' : 'lesson-btn';
+            // document.getElementById('lesson3-btn').className = lessonKey === 'lesson3' ? 'lesson-btn active' : 'lesson-btn';
+            // document.getElementById('mixed-btn').className = lessonKey === 'mixed' ? 'lesson-btn active' : 'lesson-btn';
+            // document.getElementById('lesson7-btn').className = lessonKey === 'lesson7' ? 'lesson-btn active' : 'lesson-btn';
+           // 1. 切換各按鈕 active 樣式
+    const buttons = ['lesson1-btn', 'lesson2-btn', 'lesson3-btn', 'mixed-btn'];
+    buttons.forEach(btnId => {
+        const btn = document.getElementById(btnId);
+        if (btn) {
+            const key = btnId.replace('-btn', '');
+            btn.className = (key === lessonKey) ? 'lesson-btn active' : 'lesson-btn';
+        }
+    });
+
+
+
 
             const lessonNames = {
                 lesson1: "第一冊",
                 lesson2: "第二冊",
                 lesson3: "第三冊",
-                mixed: "綜合 (1-3冊)"           
+                mixed: "綜合 (1-3冊)",
+                lesson7: "第一冊文法"
             };
             
-            const subtitleEl = document.getElementById('current-lesson-subtitle');
-            if (subtitleEl) {
-                subtitleEl.innerText = `${lessonNames[lessonKey]}核心單字庫 (含音效)`;
-            }
-            document.getElementById('welcome-title').innerText = `${lessonNames[lessonKey]} 單字測驗`;
-            document.getElementById('review-title').innerText = `${lessonNames[lessonKey]}單字總複習`;
+
+const currentName = lessonNames[lessonKey] || "第一冊";
+
+// 3. 同步更新所有相關的文字敘述
+    // (A) 圖案下方的主要標題
+    const welcomeTitle = document.getElementById('welcome-title');
+    if (welcomeTitle) {
+        welcomeTitle.innerText = `${currentName} 單字測驗`;
+    }
+
+    // (B) 圖案下方的副標題/說明文字
+    const subtitleEl = document.getElementById('current-lesson-subtitle');
+    if (subtitleEl) {
+        subtitleEl.innerText = `${currentName} 核心單字庫`;
+    }
+
+    // (C) 總複習頁面的標題
+    const reviewTitle = document.getElementById('review-title');
+    if (reviewTitle) {
+        reviewTitle.innerText = `${currentName}單字總複習`;
+    }
+                
+    // 4. 若當前在總複習頁面，同步重新渲染表格
+    if (!document.getElementById('section-review').classList.contains('hidden')) {
+        renderVocabTable(vocabList);
+    }
+}
+
+
+
+        //     const subtitleEl = document.getElementById('current-lesson-subtitle');
+        //     if (subtitleEl) {
+        //         subtitleEl.innerText = `${lessonNames[lessonKey]}核心單字庫 (含音效)`;
+        //     }
+        //     document.getElementById('welcome-title').innerText = `${lessonNames[lessonKey]} 單字測驗`;
+        //     document.getElementById('review-title').innerText = `${lessonNames[lessonKey]}單字總複習`;
                         
-            if(!document.getElementById('section-review').classList.contains('hidden')) {
-                renderVocabTable(vocabList);
-            }
-        }
+        //     if(!document.getElementById('section-review').classList.contains('hidden')) {
+        //         renderVocabTable(vocabList);
+        //     }
+        // }
 
         function switchTab(tab) {
             const btnQuiz = document.getElementById('tab-quiz');
