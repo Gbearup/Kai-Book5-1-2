@@ -15,7 +15,7 @@
                     <img src="logo.gif" alt="icon" style="width: 25px; height: 25px;">
                 </div>
                 <div class="logo-title">
-                    <h1>國中第1-3冊英文單字測驗</h1>
+                    <h1>國中第1-4冊英文單字測驗</h1>
                 </div>
             </div>
             <div class="header-nav" id="tab-menu">
@@ -24,6 +24,7 @@
                     <button onclick="changeLesson('lesson1')" id="lesson1-btn" class="lesson-btn active">第一冊</button>
                     <button onclick="changeLesson('lesson2')" id="lesson2-btn" class="lesson-btn">第二冊</button>
                     <button onclick="changeLesson('lesson3')" id="lesson3-btn" class="lesson-btn">第三冊</button>
+                    <button onclick="changeLesson('lesson4')" id="lesson4-btn" class="lesson-btn">第四冊</button>
                     <button onclick="changeLesson('mixed')" id="mixed-btn" class="lesson-btn">綜合</button>
                     <button onclick="location.href='grammer_B1.html'" class="tab-btn">第一冊文法</button>
                 </div>
@@ -219,7 +220,7 @@
         }
 
         // 自動組合混合單字庫（第一冊 + 第二冊 + 第三冊）
-        lessonsData.mixed = [...lessonsData.lesson1, ...lessonsData.lesson2, ...lessonsData.lesson3];
+        lessonsData.mixed = [...lessonsData.lesson1, ...lessonsData.lesson2, ...lessonsData.lesson3, ...lessonsData.lesson4];
 
         let currentLessonKey = 'lesson1';
         let vocabList = lessonsData[currentLessonKey];
@@ -259,7 +260,8 @@
                 lesson1: "第一冊",
                 lesson2: "第二冊",
                 lesson3: "第三冊",
-                mixed: "綜合 (1-3冊)",
+                lesson4: "第四冊",
+                mixed: "綜合 (1-4冊)",
                 lesson7: "第一冊文法"
             };
             
