@@ -1,0 +1,955 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>第五冊Lesson4 劃記句子互動學習與測驗網頁</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .flip-card {
+            background-color: transparent;
+            perspective: 1000px;
+        }
+        .flip-card-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            text-align: center;
+            transition: transform 0.6s;
+            transform-style: preserve-3d;
+        }
+        .flip-card.flipped .flip-card-inner {
+            transform: rotateY(180deg);
+        }
+        .flip-card-front, .flip-card-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            -webkit-backface-visibility: hidden;
+            backface-visibility: hidden;
+            border-radius: 1rem;
+        }
+        .flip-card-back {
+            transform: rotateY(180deg);
+        }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800 min-h-screen flex flex-col font-sans">
+
+    <!-- Header Navigation -->
+    <header class="bg-white border-b border-slate-200 sticky top-0 z-50 shadow-sm">
+        <div class="max-w-6xl mx-auto px-4 py-3 flex flex-col md:flex-row items-center justify-between gap-3">
+            <div class="flex items-center space-x-3">
+                <div class="bg-amber-400 text-slate-900 p-2.5 rounded-xl font-bold flex items-center justify-center shadow-sm">
+                    <i class="fa-solid fa-highlighter text-xl"></i>
+                </div>
+                <div>
+                    <h1 class="text-lg md:text-xl font-bold text-slate-800">第五冊Lesson4 劃記句型測驗網頁</h1>
+                    <p class="text-xs text-slate-500">8句劃記句型 ‧ 5 大互動學習模式</p>
+                </div>
+            </div>
+            
+            <!-- Navigation Tabs -->
+            <nav class="flex flex-wrap justify-center bg-slate-100 p-1 rounded-xl text-xs sm:text-sm font-semibold">
+                <button id="nav-review" onclick="switchTab('review')" class="px-3 py-1.5 sm:px-4 sm:py-2 rounded-lg transition-all text-amber-700 bg-white shadow-sm flex items-center gap-1.5">
+                    <i class="fa-solid fa-layer-group"></i> 卡片複習
+                </button>
+                <button id="nav-quiz" onclick="switchTab('quiz')" class="px-3 py-1.5 sm:px-4 sm:py-2 rounded-lg transition-all text-slate-600 hover:text-slate-900 flex items-center gap-1.5">
+                    <i class="fa-solid fa-pen-to-square"></i> 中翻英測驗
+                </button>
+                <button id="nav-cloze" onclick="switchTab('cloze')" class="px-3 py-1.5 sm:px-4 sm:py-2 rounded-lg transition-all text-slate-600 hover:text-slate-900 flex items-center gap-1.5">
+                    <i class="fa-solid fa-puzzle-piece"></i> 克漏字填空
+                </button>
+                <button id="nav-scramble" onclick="switchTab('scramble')" class="px-3 py-1.5 sm:px-4 sm:py-2 rounded-lg transition-all text-slate-600 hover:text-slate-900 flex items-center gap-1.5">
+                    <i class="fa-solid fa-[#f59e0b] fa-cubes"></i> 句子重組
+                </button>
+                <button id="nav-list" onclick="switchTab('list')" class="px-3 py-1.5 sm:px-4 sm:py-2 rounded-lg transition-all text-slate-600 hover:text-slate-900 flex items-center gap-1.5">
+                    <i class="fa-solid fa-list-ul"></i> 句型總覽
+                </button>
+                <button onclick="location.href='index.html'" class="tab-btn">回首頁Home</button>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Main Content Area -->
+    <main class="flex-1 max-w-4xl w-full mx-auto p-4 md:p-6">
+
+        <!-- ================= 1. FLASHCARD REVIEW MODE ================= -->
+        <section id="tab-review" class="space-y-6">
+            <div class="flex items-center justify-between text-sm text-slate-600">
+                <span class="font-medium">卡片進度：<span id="review-current-num">1</span> / <span id="review-total-num">11</span></span>
+                <span class="text-xs bg-amber-100 text-amber-800 px-3 py-1 rounded-full font-medium">提示：點擊卡片可翻面看英文解答</span>
+            </div>
+            <div class="w-full bg-slate-200 h-2 rounded-full overflow-hidden">
+                <div id="review-progress" class="bg-amber-400 h-full transition-all duration-300" style="width: 9.09%;"></div>
+            </div>
+
+            <div class="flip-card h-80 md:h-72 w-full cursor-pointer" onclick="toggleFlip()">
+                <div id="flashcard-inner" class="flip-card-inner border border-slate-200 rounded-2xl shadow-md">
+                    <!-- Front (Chinese) -->
+                    <div class="flip-card-front bg-white p-6 md:p-8 flex flex-col justify-between items-center text-slate-800 border-2 border-amber-200">
+                        <div class="w-full flex justify-between items-center text-slate-400 text-xs">
+                            <span class="font-semibold uppercase tracking-wider text-amber-600"><i class="fa-solid fa-language"></i> 中文題目</span>
+                            <span>點擊卡片顯示英文</span>
+                        </div>
+                        <div class="my-auto text-center">
+                            <p id="review-cn" class="text-xl md:text-2xl font-bold leading-relaxed text-slate-800"></p>
+                        </div>
+                        <div class="w-full bg-amber-50 text-amber-900 text-xs py-2 px-3 rounded-lg border border-amber-100 flex items-center gap-2">
+                            <i class="fa-solid fa-lightbulb text-amber-500"></i>
+                            <span id="grammar-front-text">文法提示...</span>
+                        </div>
+                    </div>
+
+                    <!-- Back (English) -->
+                    <div class="flip-card-back bg-slate-900 text-white p-6 md:p-8 flex flex-col justify-between items-center border-2 border-slate-700">
+                        <div class="w-full flex justify-between items-center text-slate-400 text-xs">
+                            <span class="font-semibold uppercase tracking-wider text-emerald-400"><i class="fa-solid fa-check-circle"></i> 英文解答</span>
+                            <button onclick="event.stopPropagation(); speakText(sentencesData[currentReviewIdx].en)" class="text-amber-300 hover:text-amber-100 bg-slate-800 hover:bg-slate-700 px-3 py-1 rounded-full flex items-center gap-1.5 transition">
+                                <i class="fa-solid fa-volume-high"></i> 發音
+                            </button>
+                        </div>
+                        <div class="my-auto text-center px-2">
+                            <p id="review-en" class="text-xl md:text-2xl font-medium leading-relaxed text-emerald-300 font-sans"></p>
+                        </div>
+                        <div class="w-full bg-slate-800 text-slate-300 text-xs py-2 px-3 rounded-lg border border-slate-700 flex items-center gap-2">
+                            <i class="fa-solid fa-lightbulb text-amber-400"></i>
+                            <span id="grammar-back-text">文法重點...</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="flex items-center justify-between gap-4 pt-2">
+                <button onclick="prevCard()" class="flex-1 py-3 px-4 bg-white border border-slate-200 text-slate-700 font-semibold rounded-xl hover:bg-slate-50 transition shadow-sm flex items-center justify-center gap-2">
+                    <i class="fa-solid fa-arrow-left"></i> 上一句
+                </button>
+                <button onclick="speakCurrentReview()" class="py-3 px-5 bg-amber-100 text-amber-800 font-semibold rounded-xl hover:bg-amber-200 transition flex items-center justify-center gap-2">
+                    <i class="fa-solid fa-volume-high text-lg"></i>
+                    <span class="hidden sm:inline">聽發音</span>
+                </button>
+                <button onclick="nextCard()" class="flex-1 py-3 px-4 bg-amber-500 text-white font-semibold rounded-xl hover:bg-amber-600 transition shadow-md flex items-center justify-center gap-2">
+                    下一句 <i class="fa-solid fa-arrow-right"></i>
+                </button>
+            </div>
+        </section>
+
+
+        <!-- ================= 2. FULL SENTENCE QUIZ MODE ================= -->
+        <section id="tab-quiz" class="hidden space-y-6">
+            <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm flex items-center justify-between">
+                <div>
+                    <span class="text-xs text-slate-500 font-semibold">測驗進度</span>
+                    <div class="text-lg font-bold text-slate-800"><span id="quiz-idx">1</span> / <span id="quiz-total">11</span></div>
+                </div>
+                <div class="flex gap-4 text-right">
+                    <div>
+                        <span class="text-xs text-emerald-600 font-semibold">正確率</span>
+                        <div id="quiz-accuracy" class="text-lg font-bold text-emerald-600">100%</div>
+                    </div>
+                    <div>
+                        <span class="text-xs text-amber-600 font-semibold">當前得分</span>
+                        <div id="quiz-score" class="text-lg font-bold text-amber-600">0 分</div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="quiz-main-card" class="bg-white p-6 md:p-8 rounded-2xl border border-slate-200 shadow-md space-y-6">
+                <div>
+                    <div class="flex justify-between items-center mb-2">
+                        <span class="text-xs font-bold text-slate-400 uppercase tracking-wide">請將以下中文翻譯為英文：</span>
+                        <button onclick="toggleHint('quiz-hint-box')" class="text-xs text-amber-600 hover:text-amber-700 bg-amber-50 px-2.5 py-1 rounded-md font-semibold border border-amber-200">
+                            <i class="fa-regular fa-lightbulb"></i> 顯示/隱藏提示
+                        </button>
+                    </div>
+                    <h2 id="quiz-question" class="text-lg md:text-xl font-bold text-slate-800 leading-relaxed bg-slate-50 p-4 rounded-xl border border-slate-100"></h2>
+                    
+                    <div id="quiz-hint-box" class="hidden mt-3 p-3 bg-amber-50 text-amber-800 text-xs rounded-xl border border-amber-200 flex flex-col gap-1">
+                        <div><strong><i class="fa-solid fa-key"></i> 字首提示：</strong> <span id="hint-words-info"></span></div>
+                        <div><strong><i class="fa-solid fa-bookmark"></i> 重點文法：</strong> <span id="hint-grammar-info"></span></div>
+                    </div>
+                </div>
+
+                <div class="space-y-3">
+                    <label for="quiz-input" class="block text-xs font-medium text-slate-500">輸入完整英文句子：</label>
+                    <textarea id="quiz-input" rows="3" class="w-full p-4 border border-slate-300 rounded-xl focus:ring-2 focus:ring-amber-400 focus:border-amber-400 text-base md:text-lg font-sans outline-none transition" placeholder="請在此輸入英文翻譯..."></textarea>
+                </div>
+
+                <div class="flex items-center justify-between gap-3">
+                    <button id="btn-skip" onclick="skipQuestion()" class="px-4 py-2.5 text-slate-500 hover:text-slate-700 text-sm font-semibold">跳過此題</button>
+                    <button id="btn-submit" onclick="submitAnswer()" class="px-6 py-3 bg-amber-500 hover:bg-amber-600 text-white font-bold rounded-xl shadow-md transition flex items-center gap-2">
+                        <i class="fa-solid fa-paper-plane"></i> 檢查答案
+                    </button>
+                </div>
+
+                <div id="quiz-feedback" class="hidden rounded-xl p-4 border transition-all space-y-3">
+                    <div class="flex items-center justify-between">
+                        <div id="feedback-badge" class="font-bold text-base flex items-center gap-2"></div>
+                        <button onclick="speakText(sentencesData[quizOrder[currentQuizIdx]].en)" class="text-xs bg-white border border-slate-200 px-3 py-1 rounded-full text-slate-700 hover:bg-slate-50 font-medium">
+                            <i class="fa-solid fa-volume-high"></i> 發音
+                        </button>
+                    </div>
+
+                    <div class="space-y-2 text-sm">
+                        <div>
+                            <span class="text-xs text-slate-400 block font-semibold">標準答案：</span>
+                            <p id="feedback-target" class="font-medium text-slate-800 font-sans leading-relaxed"></p>
+                        </div>
+                        <div>
+                            <span class="text-xs text-slate-400 block font-semibold">你的回答：</span>
+                            <p id="feedback-user" class="font-medium text-slate-700 font-sans leading-relaxed"></p>
+                        </div>
+                    </div>
+
+                    <div class="pt-2 flex justify-end">
+                        <button id="btn-next-quiz" onclick="nextQuestion()" class="px-5 py-2.5 bg-slate-800 hover:bg-slate-900 text-white font-semibold text-sm rounded-lg shadow transition flex items-center gap-2">
+                            下一題 <i class="fa-solid fa-chevron-right"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Quiz Summary Modal -->
+            <div id="quiz-summary" class="hidden bg-white p-6 md:p-8 rounded-2xl border border-slate-200 shadow-xl space-y-6 text-center">
+                <div class="w-16 h-16 bg-amber-100 text-amber-600 rounded-full flex items-center justify-center mx-auto text-3xl">
+                    <i class="fa-solid fa-trophy"></i>
+                </div>
+                <div>
+                    <h3 class="text-2xl font-bold text-slate-800">測驗完成！</h3>
+                    <p class="text-sm text-slate-500 mt-1">你已完成中翻英測試。</p>
+                </div>
+
+                <div class="grid grid-cols-3 gap-4 bg-slate-50 p-4 rounded-xl border border-slate-100">
+                    <div>
+                        <div class="text-xs text-slate-400 font-semibold">最終得分</div>
+                        <div id="summary-score" class="text-2xl font-bold text-amber-600">0</div>
+                    </div>
+                    <div>
+                        <div class="text-xs text-slate-400 font-semibold">正確率</div>
+                        <div id="summary-accuracy" class="text-2xl font-bold text-emerald-600">0%</div>
+                    </div>
+                    <div>
+                        <div class="text-xs text-slate-400 font-semibold">錯題數</div>
+                        <div id="summary-wrong-count" class="text-2xl font-bold text-rose-500">0</div>
+                    </div>
+                </div>
+
+                <div class="flex flex-col sm:flex-row gap-3 justify-center pt-2">
+                    <button onclick="startQuiz(false)" class="px-6 py-3 bg-amber-500 hover:bg-amber-600 text-white font-bold rounded-xl shadow transition">
+                        <i class="fa-solid fa-rotate-right"></i> 重新全部測驗
+                    </button>
+                    <button id="btn-retry-wrong" onclick="startQuiz(true)" class="px-6 py-3 bg-rose-500 hover:bg-rose-600 text-white font-bold rounded-xl shadow transition">
+                        <i class="fa-solid fa-filter"></i> 專攻錯誤句子重測
+                    </button>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- ================= 3. CLOZE TEST MODE ================= -->
+        <section id="tab-cloze" class="hidden space-y-6">
+            <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm flex items-center justify-between">
+                <div>
+                    <span class="text-xs text-slate-500 font-semibold">克漏字進度</span>
+                    <div class="text-lg font-bold text-slate-800"><span id="cloze-idx">1</span> / <span id="cloze-total">11</span></div>
+                </div>
+                <div class="text-right">
+                    <span class="text-xs text-amber-600 font-semibold">當前得分</span>
+                    <div id="cloze-score" class="text-lg font-bold text-amber-600">0 分</div>
+                </div>
+            </div>
+
+            <div id="cloze-main-card" class="bg-white p-6 md:p-8 rounded-2xl border border-slate-200 shadow-md space-y-6">
+                <div>
+                    <span class="text-xs font-bold text-slate-400 uppercase tracking-wide">中文句意：</span>
+                    <h2 id="cloze-cn" class="text-lg font-bold text-slate-800 mt-1"></h2>
+                </div>
+
+                <!-- Cloze Sentence Sentence Container -->
+                <div class="p-6 bg-slate-50 rounded-xl border border-slate-200 space-y-4">
+                    <span class="text-xs font-bold text-amber-600 uppercase tracking-wider block"><i class="fa-solid fa-pen-ruler"></i> 請在底線填入正確關鍵字詞：</span>
+                    <div id="cloze-sentence-box" class="text-lg md:text-xl font-medium leading-loose font-sans text-slate-800 flex flex-wrap items-center gap-2">
+                        <!-- Dynamically Injected Inputs -->
+                    </div>
+                </div>
+
+                <div class="flex justify-between items-center">
+                    <button onclick="toggleHint('cloze-grammar-hint')" class="text-xs text-amber-700 bg-amber-50 px-3 py-1.5 rounded-lg border border-amber-200 font-semibold">
+                        <i class="fa-regular fa-lightbulb"></i> 文法提示
+                    </button>
+                    <button id="btn-cloze-submit" onclick="submitCloze()" class="px-6 py-3 bg-amber-500 hover:bg-amber-600 text-white font-bold rounded-xl shadow-md transition flex items-center gap-2">
+                        <i class="fa-solid fa-check"></i> 檢查填空
+                    </button>
+                </div>
+
+                <div id="cloze-grammar-hint" class="hidden p-3 bg-amber-50 text-amber-900 text-xs rounded-xl border border-amber-200">
+                    <i class="fa-solid fa-info-circle mr-1"></i> <span id="cloze-grammar-text"></span>
+                </div>
+
+                <!-- Cloze Result Feedback -->
+                <div id="cloze-feedback" class="hidden rounded-xl p-4 border space-y-3">
+                    <div id="cloze-feedback-badge" class="font-bold text-base flex items-center gap-2"></div>
+                    <div>
+                        <span class="text-xs text-slate-400 block font-semibold">完整對照句子：</span>
+                        <p id="cloze-target-text" class="font-medium text-slate-800 font-sans"></p>
+                    </div>
+                    <div class="flex justify-end pt-2">
+                        <button onclick="nextCloze()" class="px-5 py-2.5 bg-slate-800 hover:bg-slate-900 text-white font-semibold text-sm rounded-lg shadow transition flex items-center gap-2">
+                            下一題 <i class="fa-solid fa-chevron-right"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Cloze Summary Modal -->
+            <div id="cloze-summary" class="hidden bg-white p-6 md:p-8 rounded-2xl border border-slate-200 shadow-xl space-y-6 text-center">
+                <div class="w-16 h-16 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center mx-auto text-3xl">
+                    <i class="fa-solid fa-puzzle-piece"></i>
+                </div>
+                <h3 class="text-2xl font-bold text-slate-800">克漏字特訓完成！</h3>
+                <div class="text-3xl font-black text-amber-500" id="cloze-final-score">100 分</div>
+                <button onclick="startCloze()" class="px-6 py-3 bg-amber-500 hover:bg-amber-600 text-white font-bold rounded-xl shadow transition">
+                    <i class="fa-solid fa-rotate-right"></i> 重新特訓
+                </button>
+            </div>
+        </section>
+
+
+        <!-- ================= 4. SENTENCE SCRAMBLE MODE ================= -->
+        <section id="tab-scramble" class="hidden space-y-6">
+            <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm flex items-center justify-between">
+                <div>
+                    <span class="text-xs text-slate-500 font-semibold">重組進度</span>
+                    <div class="text-lg font-bold text-slate-800"><span id="scramble-idx">1</span> / <span id="scramble-total">11</span></div>
+                </div>
+                <div class="text-right">
+                    <span class="text-xs text-emerald-600 font-semibold">得分</span>
+                    <div id="scramble-score" class="text-lg font-bold text-emerald-600">0 分</div>
+                </div>
+            </div>
+
+            <div id="scramble-main-card" class="bg-white p-6 md:p-8 rounded-2xl border border-slate-200 shadow-md space-y-6">
+                <div>
+                    <span class="text-xs font-bold text-slate-400 uppercase tracking-wide">中文目標句意：</span>
+                    <h2 id="scramble-cn" class="text-lg font-bold text-slate-800 mt-1"></h2>
+                </div>
+
+                <!-- Selected Answer Pool -->
+                <div class="space-y-2">
+                    <div class="flex justify-between items-center">
+                        <span class="text-xs font-semibold text-slate-500">你的句子排列結果：</span>
+                        <button onclick="resetScrambleWords()" class="text-xs text-rose-500 hover:text-rose-700 font-semibold">
+                            <i class="fa-solid fa-arrow-rotate-left"></i> 重設清除
+                        </button>
+                    </div>
+                    <div id="scramble-user-box" class="min-h-[70px] p-4 bg-slate-50 border-2 border-dashed border-amber-300 rounded-xl flex flex-wrap gap-2 items-center">
+                        <!-- Clicked words go here -->
+                    </div>
+                </div>
+
+                <!-- Word Source Pool -->
+                <div class="space-y-2">
+                    <span class="text-xs font-semibold text-slate-500">點擊單字卡進行排序：</span>
+                    <div id="scramble-source-box" class="p-4 bg-slate-100 rounded-xl flex flex-wrap gap-2.5 items-center">
+                        <!-- Shuffled word chips -->
+                    </div>
+                </div>
+
+                <div class="flex justify-end gap-3 pt-2">
+                    <button id="btn-scramble-check" onclick="checkScramble()" class="px-6 py-3 bg-amber-500 hover:bg-amber-600 text-white font-bold rounded-xl shadow-md transition flex items-center gap-2">
+                        <i class="fa-solid fa-spell-check"></i> 驗證順序
+                    </button>
+                </div>
+
+                <!-- Feedback -->
+                <div id="scramble-feedback" class="hidden rounded-xl p-4 border space-y-3">
+                    <div id="scramble-feedback-badge" class="font-bold text-base flex items-center gap-2"></div>
+                    <div>
+                        <span class="text-xs text-slate-400 block font-semibold">正確英文句子：</span>
+                        <p id="scramble-target-text" class="font-medium text-slate-800 font-sans"></p>
+                    </div>
+                    <div class="flex justify-end pt-2">
+                        <button onclick="nextScramble()" class="px-5 py-2.5 bg-slate-800 hover:bg-slate-900 text-white font-semibold text-sm rounded-lg shadow transition flex items-center gap-2">
+                            下一題 <i class="fa-solid fa-chevron-right"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Scramble Summary Modal -->
+            <div id="scramble-summary" class="hidden bg-white p-6 md:p-8 rounded-2xl border border-slate-200 shadow-xl space-y-6 text-center">
+                <div class="w-16 h-16 bg-amber-100 text-amber-600 rounded-full flex items-center justify-center mx-auto text-3xl">
+                    <i class="fa-solid fa-cubes"></i>
+                </div>
+                <h3 class="text-2xl font-bold text-slate-800">重組挑戰完成！</h3>
+                <div class="text-3xl font-black text-amber-500" id="scramble-final-score">100 分</div>
+                <button onclick="startScramble()" class="px-6 py-3 bg-amber-500 hover:bg-amber-600 text-white font-bold rounded-xl shadow transition">
+                    <i class="fa-solid fa-rotate-right"></i> 再挑戰一次
+                </button>
+            </div>
+        </section>
+
+
+        <!-- ================= 5. ALL SENTENCES LIST ================= -->
+        <section id="tab-list" class="hidden space-y-4">
+            <div class="flex justify-between items-center">
+                <h2 class="text-lg font-bold text-slate-800 flex items-center gap-2">
+                    <i class="fa-solid fa-book-open text-amber-500"></i> 11 句重點劃記句子全覽
+                </h2>
+                <span class="text-xs text-slate-500">共 11 句</span>
+            </div>
+
+            <div id="sentences-list-container" class="space-y-3">
+                <!-- JS Inject -->
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Application Script -->
+    <script>
+        // 11 Exact Highlighted Sentences
+        const sentencesData = [
+            {
+                id: 1,
+                en: "People found the pleasure of eating two meals at the same time.",
+                cn: "人們發現同時享用2餐的樂趣",
+                grammar: "the pleasure of + Ving (做...的樂趣); at the same time (同時)",
+                cloze: "People found the {pleasure} of eating two meals {at} the same time."
+            },
+            
+            {
+                id: 2,
+                en: "The first \"airport\" was built in 1909 after airplanes were created.",
+                cn: "第一座「機場」是在飛機被發明之後的1909年建造的",
+                grammar: "was built (被建造); after airplanes were created",
+                cloze: "The first \"airport\" was {built} in 1909 after airplanes were {created}."
+            },
+            {
+                id: 3,
+                en: "Words like \"notebook computer,\" \"e-mail,\" and \"download\" were formed after computers and the Internet became popular.",
+                cn: "像是「筆記型電腦」、「電子郵件」和「下載」等字是在電腦與網路變得盛行之後形成",
+                grammar: "words like... (像...等的字); were formed (被形成)",
+                cloze: "Words like \"notebook computer,\" \"e-mail,\" and \"download\" were {formed} after computers and the Internet became {popular}."
+            },
+            
+            {
+                id: 4,
+                en: "He hurt his lips and wanted to know whether he should see a doctor or not.",
+                cn: "他的嘴唇受傷了，他想知道他是否應該去看醫生",
+                grammar: "whether... or not (是否...); see a doctor (看醫生)",
+                cloze: "He did this because he hurt his lips and wanted to know {whether} he should see a doctor {or} not."
+            },
+            {
+                id: 5,
+                en: "Beside this photo, he wrote, \"It was a selfie.\"",
+                cn: "在這張照片旁邊他寫下：「這是一張自拍 (selfie)。」",
+                grammar: "Beside + N (在...旁邊); wrote (寫下)",
+                cloze: "{Beside} this photo, he wrote, \"It was a {selfie}.\""
+            },
+            {
+                id: 6,
+                en: "The word selfie was then defined as taking a photo of oneself.",
+                cn: "自拍這個字就被定義為拍攝自己的照片",
+                grammar: "be defined as + Ving/N (被定義為...)",
+                cloze: "The word selfie was then {defined} as {taking} a photo of oneself."
+            },
+            {
+                id: 7,
+                en: "It's now commonly used all over the world.",
+                cn: "它如今在此字在世界各地廣泛運用",
+                grammar: "be commonly used (被廣泛使用); all over the world (全世界)",
+                cloze: "It's now {commonly} used {all} over the world."
+            },
+            
+            {
+                id: 8,
+                en: "Can you guess and explain what usie means?",
+                cn: "你能猜到並解釋 usie 是什麼意思嗎？",
+                grammar: "explain what... means (解釋...是什麼意思 - 間接問句)",
+                cloze: "Can you guess and {explain} what usie {means}?"
+            }
+        ];
+
+        // Global States
+        let currentReviewIdx = 0;
+        let isReviewFlipped = false;
+
+        // Quiz State
+        let quizOrder = [];
+        let currentQuizIdx = 0;
+        let quizScores = [];
+        let wrongQuizIndices = [];
+
+        // Cloze State
+        let currentClozeIdx = 0;
+        let clozeScores = [];
+
+        // Scramble State
+        let currentScrambleIdx = 0;
+        let scrambleScores = [];
+        let selectedWords = [];
+
+        // Web Speech API
+        const synth = window.speechSynthesis;
+        function speakText(text) {
+            if (!synth) return;
+            synth.cancel();
+            const utterance = new SpeechSynthesisUtterance(text);
+            utterance.lang = 'en-US';
+            utterance.rate = 0.9;
+            synth.speak(utterance);
+        }
+
+        // Tab Switching
+        function switchTab(tabName) {
+            const tabs = ['review', 'quiz', 'cloze', 'scramble', 'list'];
+            tabs.forEach(t => {
+                const navBtn = document.getElementById(`nav-${t}`);
+                const tabSec = document.getElementById(`tab-${t}`);
+                if (t === tabName) {
+                    navBtn.className = "px-3 py-1.5 sm:px-4 sm:py-2 rounded-lg transition-all text-amber-700 bg-white shadow-sm flex items-center gap-1.5 font-bold";
+                    tabSec.classList.remove('hidden');
+                } else {
+                    navBtn.className = "px-3 py-1.5 sm:px-4 sm:py-2 rounded-lg transition-all text-slate-600 hover:text-slate-900 flex items-center gap-1.5 font-semibold";
+                    tabSec.classList.add('hidden');
+                }
+            });
+
+            if (tabName === 'quiz' && quizOrder.length === 0) startQuiz(false);
+            if (tabName === 'cloze') startCloze();
+            if (tabName === 'scramble') startScramble();
+        }
+
+        function toggleHint(id) {
+            const el = document.getElementById(id);
+            el.classList.toggle('hidden');
+        }
+
+        // ================= 1. FLASHCARD LOGIC =================
+        function renderReviewCard() {
+            const data = sentencesData[currentReviewIdx];
+            document.getElementById('review-current-num').innerText = currentReviewIdx + 1;
+            document.getElementById('review-total-num').innerText = sentencesData.length;
+            document.getElementById('review-progress').style.width = `${((currentReviewIdx + 1) / sentencesData.length) * 100}%`;
+
+            document.getElementById('review-cn').innerText = data.cn;
+            document.getElementById('review-en').innerText = data.en;
+            document.getElementById('grammar-front-text').innerText = data.grammar;
+            document.getElementById('grammar-back-text').innerText = data.grammar;
+
+            const inner = document.getElementById('flashcard-inner');
+            inner.parentElement.classList.remove('flipped');
+            isReviewFlipped = false;
+        }
+
+        function toggleFlip() {
+            const card = document.getElementById('flashcard-inner').parentElement;
+            card.classList.toggle('flipped');
+            isReviewFlipped = !isReviewFlipped;
+        }
+
+        function nextCard() {
+            currentReviewIdx = (currentReviewIdx + 1) % sentencesData.length;
+            renderReviewCard();
+        }
+
+        function prevCard() {
+            currentReviewIdx = (currentReviewIdx - 1 + sentencesData.length) % sentencesData.length;
+            renderReviewCard();
+        }
+
+        function speakCurrentReview() {
+            speakText(sentencesData[currentReviewIdx].en);
+        }
+
+        // ================= 2. FULL QUIZ LOGIC =================
+        function startQuiz(onlyWrong = false) {
+            if (onlyWrong && wrongQuizIndices.length > 0) {
+                quizOrder = [...wrongQuizIndices];
+            } else {
+                quizOrder = Array.from({length: sentencesData.length}, (_, i) => i);
+                quizOrder.sort(() => Math.random() - 0.5);
+            }
+
+            currentQuizIdx = 0;
+            quizScores = [];
+            wrongQuizIndices = [];
+
+            document.getElementById('quiz-summary').classList.add('hidden');
+            document.getElementById('quiz-main-card').classList.remove('hidden');
+            document.getElementById('quiz-total').innerText = quizOrder.length;
+
+            loadQuizQuestion();
+        }
+
+        function loadQuizQuestion() {
+            const dataIdx = quizOrder[currentQuizIdx];
+            const data = sentencesData[dataIdx];
+
+            document.getElementById('quiz-idx').innerText = currentQuizIdx + 1;
+            document.getElementById('quiz-question').innerText = data.cn;
+            document.getElementById('quiz-input').value = '';
+            document.getElementById('quiz-feedback').classList.add('hidden');
+            document.getElementById('quiz-hint-box').classList.add('hidden');
+
+            const words = data.en.split(' ');
+            const wordHints = words.map(w => {
+                const cleanWord = w.replace(/[^a-zA-Z]/g, '');
+                return cleanWord.length > 0 ? cleanWord[0] + '_'.repeat(cleanWord.length - 1) : w;
+            }).join(' ');
+
+            document.getElementById('hint-words-info').innerText = wordHints;
+            document.getElementById('hint-grammar-info').innerText = data.grammar;
+
+            document.getElementById('quiz-input').disabled = false;
+            document.getElementById('btn-submit').classList.remove('hidden');
+            document.getElementById('btn-skip').classList.remove('hidden');
+
+            updateQuizStats();
+        }
+
+        function normalizeString(str) {
+            return str.toLowerCase().replace(/[.,\/#!$%\^&\*;:{}=\-_`~()"'’“”]/g, "").replace(/\s+/g, " ").trim();
+        }
+
+        function submitAnswer() {
+            const userAns = document.getElementById('quiz-input').value.trim();
+            if (!userAns) return;
+
+            const dataIdx = quizOrder[currentQuizIdx];
+            const targetAns = sentencesData[dataIdx].en;
+
+            const normUser = normalizeString(userAns);
+            const normTarget = normalizeString(targetAns);
+
+            const isCorrect = (userAns.trim() === targetAns) || (normUser === normTarget);
+
+            if (isCorrect) {
+                quizScores.push(100);
+            } else {
+                quizScores.push(0);
+                wrongQuizIndices.push(dataIdx);
+            }
+
+            const feedbackBox = document.getElementById('quiz-feedback');
+            const badge = document.getElementById('feedback-badge');
+            feedbackBox.classList.remove('hidden');
+
+            if (isCorrect) {
+                feedbackBox.className = "rounded-xl p-4 border space-y-3 bg-emerald-50 border-emerald-200";
+                badge.className = "font-bold text-base flex items-center gap-2 text-emerald-700";
+                badge.innerHTML = `<i class="fa-solid fa-circle-check text-xl"></i> 完全正確！`;
+            } else {
+                feedbackBox.className = "rounded-xl p-4 border space-y-3 bg-rose-50 border-rose-200";
+                badge.className = "font-bold text-base flex items-center gap-2 text-rose-700";
+                badge.innerHTML = `<i class="fa-solid fa-circle-xmark text-xl"></i> 答案有出入`;
+            }
+
+            document.getElementById('feedback-target').innerText = targetAns;
+            document.getElementById('feedback-user').innerText = userAns || "(未輸入)";
+
+            document.getElementById('quiz-input').disabled = true;
+            document.getElementById('btn-submit').classList.add('hidden');
+            document.getElementById('btn-skip').classList.add('hidden');
+
+            speakText(targetAns);
+            updateQuizStats();
+        }
+
+        function skipQuestion() {
+            document.getElementById('quiz-input').value = "";
+            submitAnswer();
+        }
+
+        function nextQuestion() {
+            currentQuizIdx++;
+            if (currentQuizIdx < quizOrder.length) {
+                loadQuizQuestion();
+            } else {
+                showQuizSummary();
+            }
+        }
+
+        function updateQuizStats() {
+            const currentTotal = quizScores.length;
+            const correctCount = quizScores.filter(s => s === 100).length;
+            const accuracy = currentTotal > 0 ? Math.round((correctCount / currentTotal) * 100) : 100;
+            const scoreSum = Math.round(quizScores.reduce((a, b) => a + b, 0) / Math.max(1, quizOrder.length));
+
+            document.getElementById('quiz-score').innerText = `${scoreSum} 分`;
+            document.getElementById('quiz-accuracy').innerText = `${accuracy}%`;
+        }
+
+        function showQuizSummary() {
+            document.getElementById('quiz-main-card').classList.add('hidden');
+            const summary = document.getElementById('quiz-summary');
+            summary.classList.remove('hidden');
+
+            const totalCount = quizOrder.length;
+            const correctCount = quizScores.filter(s => s === 100).length;
+            const wrongCount = totalCount - correctCount;
+            const accuracy = Math.round((correctCount / totalCount) * 100);
+
+            document.getElementById('summary-score').innerText = accuracy;
+            document.getElementById('summary-accuracy').innerText = `${accuracy}%`;
+            document.getElementById('summary-wrong-count').innerText = wrongCount;
+
+            const retryBtn = document.getElementById('btn-retry-wrong');
+            if (wrongCount === 0) retryBtn.classList.add('hidden');
+            else retryBtn.classList.remove('hidden');
+        }
+
+        // ================= 3. CLOZE TEST LOGIC =================
+        function startCloze() {
+            currentClozeIdx = 0;
+            clozeScores = [];
+            document.getElementById('cloze-summary').classList.add('hidden');
+            document.getElementById('cloze-main-card').classList.remove('hidden');
+            document.getElementById('cloze-total').innerText = sentencesData.length;
+            loadClozeQuestion();
+        }
+
+        function loadClozeQuestion() {
+            const data = sentencesData[currentClozeIdx];
+            document.getElementById('cloze-idx').innerText = currentClozeIdx + 1;
+            document.getElementById('cloze-cn').innerText = data.cn;
+            document.getElementById('cloze-grammar-text').innerText = data.grammar;
+            document.getElementById('cloze-grammar-hint').classList.add('hidden');
+            document.getElementById('cloze-feedback').classList.add('hidden');
+            document.getElementById('btn-cloze-submit').classList.remove('hidden');
+
+            const container = document.getElementById('cloze-sentence-box');
+            container.innerHTML = '';
+
+            const parts = data.cloze.split(/(\{[^}]+\})/g);
+            parts.forEach(part => {
+                if (part.startsWith('{') && part.endsWith('}')) {
+                    const targetWord = part.slice(1, -1);
+                    const input = document.createElement('input');
+                    input.type = 'text';
+                    input.dataset.answer = targetWord;
+                    input.className = "cloze-input border-b-2 border-amber-500 bg-amber-50 px-2 py-0.5 text-amber-900 font-bold outline-none text-center rounded-t shadow-inner min-w-[80px]";
+                    input.style.width = `${Math.max(targetWord.length * 14, 70)}px`;
+                    container.appendChild(input);
+                } else if (part) {
+                    const span = document.createElement('span');
+                    span.innerText = part;
+                    container.appendChild(span);
+                }
+            });
+        }
+
+        function submitCloze() {
+            const inputs = document.querySelectorAll('.cloze-input');
+            let allCorrect = true;
+
+            inputs.forEach(input => {
+                const userVal = normalizeString(input.value);
+                const targetVal = normalizeString(input.dataset.answer);
+                if (userVal === targetVal) {
+                    input.className = "cloze-input border-b-2 border-emerald-500 bg-emerald-100 text-emerald-900 font-bold px-2 py-0.5 text-center rounded-t";
+                    input.disabled = true;
+                } else {
+                    allCorrect = false;
+                    input.className = "cloze-input border-b-2 border-rose-500 bg-rose-100 text-rose-900 font-bold px-2 py-0.5 text-center rounded-t";
+                    input.disabled = true;
+                }
+            });
+
+            clozeScores.push(allCorrect ? 100 : 0);
+
+            const feedback = document.getElementById('cloze-feedback');
+            const badge = document.getElementById('cloze-feedback-badge');
+            feedback.classList.remove('hidden');
+
+            if (allCorrect) {
+                feedback.className = "rounded-xl p-4 border space-y-3 bg-emerald-50 border-emerald-200";
+                badge.className = "font-bold text-base text-emerald-700 flex items-center gap-2";
+                badge.innerHTML = `<i class="fa-solid fa-circle-check"></i> 填空全對！`;
+            } else {
+                feedback.className = "rounded-xl p-4 border space-y-3 bg-rose-50 border-rose-200";
+                badge.className = "font-bold text-base text-rose-700 flex items-center gap-2";
+                badge.innerHTML = `<i class="fa-solid fa-circle-xmark"></i> 部分填空有誤`;
+            }
+
+            document.getElementById('cloze-target-text').innerText = sentencesData[currentClozeIdx].en;
+            document.getElementById('btn-cloze-submit').classList.add('hidden');
+
+            const scoreAvg = Math.round(clozeScores.reduce((a,b)=>a+b,0) / clozeScores.length);
+            document.getElementById('cloze-score').innerText = `${scoreAvg} 分`;
+            speakText(sentencesData[currentClozeIdx].en);
+        }
+
+        function nextCloze() {
+            currentClozeIdx++;
+            if (currentClozeIdx < sentencesData.length) {
+                loadClozeQuestion();
+            } else {
+                document.getElementById('cloze-main-card').classList.add('hidden');
+                document.getElementById('cloze-summary').classList.remove('hidden');
+                const scoreAvg = Math.round(clozeScores.reduce((a,b)=>a+b,0) / clozeScores.length);
+                document.getElementById('cloze-final-score').innerText = `${scoreAvg} 分`;
+            }
+        }
+
+        // ================= 4. SENTENCE SCRAMBLE LOGIC =================
+        function startScramble() {
+            currentScrambleIdx = 0;
+            scrambleScores = [];
+            document.getElementById('scramble-summary').classList.add('hidden');
+            document.getElementById('scramble-main-card').classList.remove('hidden');
+            document.getElementById('scramble-total').innerText = sentencesData.length;
+            loadScrambleQuestion();
+        }
+
+        function loadScrambleQuestion() {
+            const data = sentencesData[currentScrambleIdx];
+            document.getElementById('scramble-idx').innerText = currentScrambleIdx + 1;
+            document.getElementById('scramble-cn').innerText = data.cn;
+            document.getElementById('scramble-feedback').classList.add('hidden');
+            document.getElementById('btn-scramble-check').classList.remove('hidden');
+
+            selectedWords = [];
+            renderScrambleBoxes();
+        }
+
+        function renderScrambleBoxes() {
+            const data = sentencesData[currentScrambleIdx];
+            const words = data.en.split(' ');
+            
+            // Generate source tokens with index if first load
+            let tokens = words.map((w, idx) => ({ id: idx, word: w }));
+            tokens.sort(() => Math.random() - 0.5);
+
+            const userBox = document.getElementById('scramble-user-box');
+            const sourceBox = document.getElementById('scramble-source-box');
+            userBox.innerHTML = '';
+            sourceBox.innerHTML = '';
+
+            selectedWords.forEach((item, index) => {
+                const chip = document.createElement('button');
+                chip.className = "px-3 py-1.5 bg-amber-500 text-white font-medium rounded-lg shadow-sm hover:bg-amber-600 transition text-sm flex items-center gap-1 font-sans";
+                chip.innerHTML = `${item.word} <i class="fa-solid fa-xmark text-xs opacity-70"></i>`;
+                chip.onclick = () => {
+                    selectedWords.splice(index, 1);
+                    updateScrambleDisplay();
+                };
+                userBox.appendChild(chip);
+            });
+
+            // Remaining available tokens
+            const selectedIds = selectedWords.map(s => s.id);
+            tokens.forEach((item) => {
+                if (!selectedIds.includes(item.id)) {
+                    const chip = document.createElement('button');
+                    chip.className = "px-3 py-1.5 bg-white border border-slate-300 text-slate-700 font-medium rounded-lg shadow-sm hover:border-amber-400 hover:text-amber-600 transition text-sm font-sans";
+                    chip.innerText = item.word;
+                    chip.onclick = () => {
+                        selectedWords.push(item);
+                        updateScrambleDisplay();
+                    };
+                    sourceBox.appendChild(chip);
+                }
+            });
+        }
+
+        function updateScrambleDisplay() {
+            renderScrambleBoxes();
+        }
+
+        function resetScrambleWords() {
+            selectedWords = [];
+            renderScrambleBoxes();
+        }
+
+        function checkScramble() {
+            const data = sentencesData[currentScrambleIdx];
+            const userSentence = selectedWords.map(s => s.word).join(' ');
+            const isCorrect = userSentence === data.en;
+
+            scrambleScores.push(isCorrect ? 100 : 0);
+
+            const feedback = document.getElementById('scramble-feedback');
+            const badge = document.getElementById('scramble-feedback-badge');
+            feedback.classList.remove('hidden');
+
+            if (isCorrect) {
+                feedback.className = "rounded-xl p-4 border space-y-3 bg-emerald-50 border-emerald-200";
+                badge.className = "font-bold text-base text-emerald-700 flex items-center gap-2";
+                badge.innerHTML = `<i class="fa-solid fa-circle-check"></i> 重組完全正確！`;
+            } else {
+                feedback.className = "rounded-xl p-4 border space-y-3 bg-rose-50 border-rose-200";
+                badge.className = "font-bold text-base text-rose-700 flex items-center gap-2";
+                badge.innerHTML = `<i class="fa-solid fa-circle-xmark"></i> 順序有錯喔`;
+            }
+
+            document.getElementById('scramble-target-text').innerText = data.en;
+            document.getElementById('btn-scramble-check').classList.add('hidden');
+
+            const scoreAvg = Math.round(scrambleScores.reduce((a,b)=>a+b,0) / scrambleScores.length);
+            document.getElementById('scramble-score').innerText = `${scoreAvg} 分`;
+            speakText(data.en);
+        }
+
+        function nextScramble() {
+            currentScrambleIdx++;
+            if (currentScrambleIdx < sentencesData.length) {
+                loadScrambleQuestion();
+            } else {
+                document.getElementById('scramble-main-card').classList.add('hidden');
+                document.getElementById('scramble-summary').classList.remove('hidden');
+                const scoreAvg = Math.round(scrambleScores.reduce((a,b)=>a+b,0) / scrambleScores.length);
+                document.getElementById('scramble-final-score').innerText = `${scoreAvg} 分`;
+            }
+        }
+
+        // ================= 5. SENTENCE LIST LOGIC =================
+        function renderSentencesList() {
+            const container = document.getElementById('sentences-list-container');
+            container.innerHTML = sentencesData.map((item, idx) => `
+                <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm hover:border-amber-300 transition space-y-2">
+                    <div class="flex items-start justify-between gap-3">
+                        <div class="flex items-center gap-2">
+                            <span class="w-6 h-6 rounded-full bg-amber-100 text-amber-800 text-xs font-bold flex items-center justify-center shrink-0">
+                                ${idx + 1}
+                            </span>
+                            <p class="font-medium text-slate-800 text-sm">${item.cn}</p>
+                        </div>
+                        <button onclick="speakText('${item.en.replace(/'/g, "\\'")}')" class="text-slate-400 hover:text-amber-600 p-1.5 rounded-lg transition" title="朗讀英文">
+                            <i class="fa-solid fa-volume-high"></i>
+                        </button>
+                    </div>
+                    <p class="text-emerald-700 font-sans font-medium text-base pl-8">${item.en}</p>
+                    <div class="pl-8 pt-1 text-xs text-slate-500 flex items-center gap-1">
+                        <i class="fa-solid fa-lightbulb text-amber-500"></i>
+                        <span>${item.grammar}</span>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Initialize Window
+        window.onload = function() {
+            renderReviewCard();
+            renderSentencesList();
+        };
+    </script>
+</body>
+</html>
