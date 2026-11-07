@@ -1,0 +1,627 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>螢光筆單字庫與文法小測驗</title>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+TC:wght@400;500;700&display=swap');
+    body {
+      font-family: 'Inter', 'Noto Sans TC', sans-serif;
+    }
+    .card-flip {
+      perspective: 1000px;
+    }
+    .card-inner {
+      transition: transform 0.6s;
+      transform-style: preserve-3d;
+    }
+    .card-flip.flipped .card-inner {
+      transform: rotateY(180deg);
+    }
+    .card-front, .card-back {
+      backface-visibility: hidden;
+      -webkit-backface-visibility: hidden;
+    }
+    .card-back {
+      transform: rotateY(180deg);
+    }
+  </style>
+</head>
+<body class="bg-slate-50 text-slate-800 min-h-screen flex flex-col justify-between">
+
+  <!-- Header -->
+  <header class="bg-indigo-600 text-white shadow-lg sticky top-0 z-50">
+    <div class="max-w-4xl mx-auto px-4 py-4 flex flex-col sm:flex-row justify-between items-center gap-4">
+      <div class="flex items-center gap-3">
+        <div class="w-10 h-10 bg-white/20 rounded-xl flex items-center justify-center text-xl">
+          <i class="fa-solid fa-highlighter text-yellow-300"></i>
+        </div>
+        <div>
+          <h1 class="text-xl font-bold tracking-wide">試卷重點單字複習網頁</h1>
+          <p class="text-xs text-indigo-200">螢光筆標記單字卡與文法小測驗</p>
+        </div>
+      </div>
+      
+      <!-- Tab Controls -->
+      <div class="flex bg-indigo-800/50 p-1.5 rounded-xl gap-1 w-full sm:w-auto">
+        <button id="btn-tab-vocab" onclick="switchTab('vocab')" class="flex-1 sm:flex-none px-5 py-2 rounded-lg text-sm font-semibold transition-all bg-white text-indigo-700 shadow">
+          <i class="fa-solid fa-cards-blank mr-1.5"></i>單字卡
+        </button>
+        <button id="btn-tab-quiz" onclick="switchTab('quiz')" class="flex-1 sm:flex-none px-5 py-2 rounded-lg text-sm font-semibold transition-all text-indigo-100 hover:text-white hover:bg-white/10">
+          <i class="fa-solid fa-pen-to-square mr-1.5"></i>小測驗
+        </button>
+
+        <button onclick="location.href='index.html'" class="tab-btn">📚 回首頁</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content Area -->
+  <main class="max-w-4xl mx-auto px-4 py-8 w-full flex-1">
+
+    <!-- ================= VOCABULARY TAB ================= -->
+    <section id="tab-vocab" class="space-y-6">
+      <div class="bg-amber-50 border border-amber-200 text-amber-900 rounded-2xl p-4 text-sm flex items-center justify-between gap-3 shadow-sm">
+        <div class="flex items-center gap-2">
+          <i class="fa-solid fa-lightbulb text-amber-500 text-lg flex-shrink-0"></i>
+          <span>點擊單字卡即可<strong>翻面檢視考題例句</strong>；點擊喇叭圖示可<strong>聆聽發音</strong>。</span>
+        </div>
+      </div>
+
+      <!-- Grid of Cards -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+        
+        <!-- Word 1: wave -->
+        <div class="card-flip h-60 cursor-pointer" onclick="toggleFlip(this)">
+          <div class="card-inner relative w-full h-full rounded-2xl shadow-sm border border-slate-200 bg-white hover:shadow-md transition">
+            <!-- Front -->
+            <div class="card-front absolute inset-0 p-6 flex flex-col justify-between bg-white rounded-2xl">
+              <div class="flex justify-between items-start">
+                <div>
+                  <span class="px-2.5 py-1 bg-indigo-50 text-indigo-600 rounded-md text-xs font-bold">N. / V.</span>
+                  <h3 class="text-3xl font-extrabold text-slate-800 mt-2">wave</h3>
+                </div>
+                <button onclick="speakText(event, 'wave')" class="p-3 bg-slate-100 hover:bg-indigo-100 text-slate-600 hover:text-indigo-600 rounded-full transition">
+                  <i class="fa-solid fa-volume-high text-base"></i>
+                </button>
+              </div>
+              <div>
+                <p class="text-xl font-bold text-slate-700">波浪；揮手</p>
+                <p class="text-xs text-slate-400 mt-1">來自試卷題目：波浪薯條的形狀</p>
+              </div>
+              <div class="text-xs text-indigo-500 font-medium flex items-center justify-between border-t pt-3">
+                <span><i class="fa-solid fa-rotate mr-1"></i>點擊看考題例句</span>
+                <span class="text-slate-300">1 / 6</span>
+              </div>
+            </div>
+            <!-- Back -->
+            <div class="card-back absolute inset-0 p-6 flex flex-col justify-between bg-indigo-600 text-white rounded-2xl">
+              <div>
+                <div class="flex justify-between items-center border-b border-indigo-400/40 pb-2 mb-3">
+                  <span class="text-xs font-semibold text-indigo-200">考題例句</span>
+                  <button onclick="speakText(event, 'CRINKLE-CUT fries look like waves.')" class="p-2 bg-indigo-500 hover:bg-indigo-400 rounded-full transition">
+                    <i class="fa-solid fa-volume-high text-xs"></i>
+                  </button>
+                </div>
+                <p class="text-base font-medium italic leading-relaxed text-indigo-50">"CRINKLE-CUT fries look like waves."</p>
+                <p class="text-xs text-indigo-200 mt-2">波浪薯條看起來就像波浪一樣。</p>
+              </div>
+              <div class="text-xs text-indigo-200 text-right border-t border-indigo-400/40 pt-2">
+                <i class="fa-solid fa-rotate mr-1"></i>點擊翻回正面
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Word 2: LEAST -->
+        <div class="card-flip h-60 cursor-pointer" onclick="toggleFlip(this)">
+          <div class="card-inner relative w-full h-full rounded-2xl shadow-sm border border-slate-200 bg-white hover:shadow-md transition">
+            <div class="card-front absolute inset-0 p-6 flex flex-col justify-between bg-white rounded-2xl">
+              <div class="flex justify-between items-start">
+                <div>
+                  <span class="px-2.5 py-1 bg-indigo-50 text-indigo-600 rounded-md text-xs font-bold">Adv. / Adj.</span>
+                  <h3 class="text-3xl font-extrabold text-slate-800 mt-2">LEAST</h3>
+                </div>
+                <button onclick="speakText(event, 'least')" class="p-3 bg-slate-100 hover:bg-indigo-100 text-slate-600 hover:text-indigo-600 rounded-full transition">
+                  <i class="fa-solid fa-volume-high text-base"></i>
+                </button>
+              </div>
+              <div>
+                <p class="text-xl font-bold text-slate-700">最少、最不...</p>
+                <p class="text-xs text-slate-400 mt-1">little 的最高級，常見片語 at least (至少)</p>
+              </div>
+              <div class="text-xs text-indigo-500 font-medium flex items-center justify-between border-t pt-3">
+                <span><i class="fa-solid fa-rotate mr-1"></i>點擊看考題例句</span>
+                <span class="text-slate-300">2 / 6</span>
+              </div>
+            </div>
+            <div class="card-back absolute inset-0 p-6 flex flex-col justify-between bg-indigo-600 text-white rounded-2xl">
+              <div>
+                <div class="flex justify-between items-center border-b border-indigo-400/40 pb-2 mb-3">
+                  <span class="text-xs font-semibold text-indigo-200">考題例句</span>
+                  <button onclick="speakText(event, 'Which was the person next to Wolf the LEAST likely to say?')" class="p-2 bg-indigo-500 hover:bg-indigo-400 rounded-full transition">
+                    <i class="fa-solid fa-volume-high text-xs"></i>
+                  </button>
+                </div>
+                <p class="text-sm font-medium italic leading-relaxed text-indigo-50">"...the person next to Wolf the LEAST likely to say..."</p>
+                <p class="text-xs text-indigo-200 mt-2">Wolf 旁邊的人最不可能說出哪句話？</p>
+              </div>
+              <div class="text-xs text-indigo-200 text-right border-t border-indigo-400/40 pt-2">
+                <i class="fa-solid fa-rotate mr-1"></i>點擊翻回正面
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Word 3: course -->
+        <div class="card-flip h-60 cursor-pointer" onclick="toggleFlip(this)">
+          <div class="card-inner relative w-full h-full rounded-2xl shadow-sm border border-slate-200 bg-white hover:shadow-md transition">
+            <div class="card-front absolute inset-0 p-6 flex flex-col justify-between bg-white rounded-2xl">
+              <div class="flex justify-between items-start">
+                <div>
+                  <span class="px-2.5 py-1 bg-indigo-50 text-indigo-600 rounded-md text-xs font-bold">N.</span>
+                  <h3 class="text-3xl font-extrabold text-slate-800 mt-2">course</h3>
+                </div>
+                <button onclick="speakText(event, 'course')" class="p-3 bg-slate-100 hover:bg-indigo-100 text-slate-600 hover:text-indigo-600 rounded-full transition">
+                  <i class="fa-solid fa-volume-high text-base"></i>
+                </button>
+              </div>
+              <div>
+                <p class="text-xl font-bold text-slate-700">課程</p>
+                <p class="text-xs text-slate-400 mt-1">搭配用法：take a course (修課)</p>
+              </div>
+              <div class="text-xs text-indigo-500 font-medium flex items-center justify-between border-t pt-3">
+                <span><i class="fa-solid fa-rotate mr-1"></i>點擊看考題例句</span>
+                <span class="text-slate-300">3 / 6</span>
+              </div>
+            </div>
+            <div class="card-back absolute inset-0 p-6 flex flex-col justify-between bg-indigo-600 text-white rounded-2xl">
+              <div>
+                <div class="flex justify-between items-center border-b border-indigo-400/40 pb-2 mb-3">
+                  <span class="text-xs font-semibold text-indigo-200">考題例句</span>
+                  <button onclick="speakText(event, 'He would like to take a writing course.')" class="p-2 bg-indigo-500 hover:bg-indigo-400 rounded-full transition">
+                    <i class="fa-solid fa-volume-high text-xs"></i>
+                  </button>
+                </div>
+                <p class="text-base font-medium italic leading-relaxed text-indigo-50">"He'd like to take a writing course."</p>
+                <p class="text-xs text-indigo-200 mt-2">他想要修一門寫作課。</p>
+              </div>
+              <div class="text-xs text-indigo-200 text-right border-t border-indigo-400/40 pt-2">
+                <i class="fa-solid fa-rotate mr-1"></i>點擊翻回正面
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Word 4: deal with -->
+        <div class="card-flip h-60 cursor-pointer" onclick="toggleFlip(this)">
+          <div class="card-inner relative w-full h-full rounded-2xl shadow-sm border border-slate-200 bg-white hover:shadow-md transition">
+            <div class="card-front absolute inset-0 p-6 flex flex-col justify-between bg-white rounded-2xl">
+              <div class="flex justify-between items-start">
+                <div>
+                  <span class="px-2.5 py-1 bg-indigo-50 text-indigo-600 rounded-md text-xs font-bold">Phr.</span>
+                  <h3 class="text-3xl font-extrabold text-slate-800 mt-2">deal with</h3>
+                </div>
+                <button onclick="speakText(event, 'deal with')" class="p-3 bg-slate-100 hover:bg-indigo-100 text-slate-600 hover:text-indigo-600 rounded-full transition">
+                  <i class="fa-solid fa-volume-high text-base"></i>
+                </button>
+              </div>
+              <div>
+                <p class="text-xl font-bold text-slate-700">處理、應付</p>
+                <p class="text-xs text-slate-400 mt-1">同義詞：handle, cope with</p>
+              </div>
+              <div class="text-xs text-indigo-500 font-medium flex items-center justify-between border-t pt-3">
+                <span><i class="fa-solid fa-rotate mr-1"></i>點擊看考題例句</span>
+                <span class="text-slate-300">4 / 6</span>
+              </div>
+            </div>
+            <div class="card-back absolute inset-0 p-6 flex flex-col justify-between bg-indigo-600 text-white rounded-2xl">
+              <div>
+                <div class="flex justify-between items-center border-b border-indigo-400/40 pb-2 mb-3">
+                  <span class="text-xs font-semibold text-indigo-200">考題例句</span>
+                  <button onclick="speakText(event, 'I usually deal with difficult work in the morning.')" class="p-2 bg-indigo-500 hover:bg-indigo-400 rounded-full transition">
+                    <i class="fa-solid fa-volume-high text-xs"></i>
+                  </button>
+                </div>
+                <p class="text-base font-medium italic leading-relaxed text-indigo-50">"I usually deal with difficult work in the morning."</p>
+                <p class="text-xs text-indigo-200 mt-2">我通常在早上處理困難的工作。</p>
+              </div>
+              <div class="text-xs text-indigo-200 text-right border-t border-indigo-400/40 pt-2">
+                <i class="fa-solid fa-rotate mr-1"></i>點擊翻回正面
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Word 5: almost -->
+        <div class="card-flip h-60 cursor-pointer" onclick="toggleFlip(this)">
+          <div class="card-inner relative w-full h-full rounded-2xl shadow-sm border border-slate-200 bg-white hover:shadow-md transition">
+            <div class="card-front absolute inset-0 p-6 flex flex-col justify-between bg-white rounded-2xl">
+              <div class="flex justify-between items-start">
+                <div>
+                  <span class="px-2.5 py-1 bg-indigo-50 text-indigo-600 rounded-md text-xs font-bold">Adv.</span>
+                  <h3 class="text-3xl font-extrabold text-slate-800 mt-2">almost</h3>
+                </div>
+                <button onclick="speakText(event, 'almost')" class="p-3 bg-slate-100 hover:bg-indigo-100 text-slate-600 hover:text-indigo-600 rounded-full transition">
+                  <i class="fa-solid fa-volume-high text-base"></i>
+                </button>
+              </div>
+              <div>
+                <p class="text-xl font-bold text-slate-700">幾乎、差不多</p>
+                <p class="text-xs text-slate-400 mt-1">表示程度近乎全滿的副詞</p>
+              </div>
+              <div class="text-xs text-indigo-500 font-medium flex items-center justify-between border-t pt-3">
+                <span><i class="fa-solid fa-rotate mr-1"></i>點擊看考題例句</span>
+                <span class="text-slate-300">5 / 6</span>
+              </div>
+            </div>
+            <div class="card-back absolute inset-0 p-6 flex flex-col justify-between bg-indigo-600 text-white rounded-2xl">
+              <div>
+                <div class="flex justify-between items-center border-b border-indigo-400/40 pb-2 mb-3">
+                  <span class="text-xs font-semibold text-indigo-200">考題例句</span>
+                  <button onclick="speakText(event, 'The two cities are almost different.')" class="p-2 bg-indigo-500 hover:bg-indigo-400 rounded-full transition">
+                    <i class="fa-solid fa-volume-high text-xs"></i>
+                  </button>
+                </div>
+                <p class="text-base font-medium italic leading-relaxed text-indigo-50">"The two cities are almost different."</p>
+                <p class="text-xs text-indigo-200 mt-2">這兩座城市幾乎完全不同。</p>
+              </div>
+              <div class="text-xs text-indigo-200 text-right border-t border-indigo-400/40 pt-2">
+                <i class="fa-solid fa-rotate mr-1"></i>點擊翻回正面
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Word 6: quite -->
+        <div class="card-flip h-60 cursor-pointer" onclick="toggleFlip(this)">
+          <div class="card-inner relative w-full h-full rounded-2xl shadow-sm border border-slate-200 bg-white hover:shadow-md transition">
+            <div class="card-front absolute inset-0 p-6 flex flex-col justify-between bg-white rounded-2xl">
+              <div class="flex justify-between items-start">
+                <div>
+                  <span class="px-2.5 py-1 bg-indigo-50 text-indigo-600 rounded-md text-xs font-bold">Adv.</span>
+                  <h3 class="text-3xl font-extrabold text-slate-800 mt-2">quite</h3>
+                </div>
+                <button onclick="speakText(event, 'quite')" class="p-3 bg-slate-100 hover:bg-indigo-100 text-slate-600 hover:text-indigo-600 rounded-full transition">
+                  <i class="fa-solid fa-volume-high text-base"></i>
+                </button>
+              </div>
+              <div>
+                <p class="text-xl font-bold text-slate-700">相當、很</p>
+                <p class="text-xs text-slate-400 mt-1">quite some (相當多的...)</p>
+              </div>
+              <div class="text-xs text-indigo-500 font-medium flex items-center justify-between border-t pt-3">
+                <span><i class="fa-solid fa-rotate mr-1"></i>點擊看考題例句</span>
+                <span class="text-slate-300">6 / 6</span>
+              </div>
+            </div>
+            <div class="card-back absolute inset-0 p-6 flex flex-col justify-between bg-indigo-600 text-white rounded-2xl">
+              <div>
+                <div class="flex justify-between items-center border-b border-indigo-400/40 pb-2 mb-3">
+                  <span class="text-xs font-semibold text-indigo-200">考題例句</span>
+                  <button onclick="speakText(event, 'with quite some old people living there.')" class="p-2 bg-indigo-500 hover:bg-indigo-400 rounded-full transition">
+                    <i class="fa-solid fa-volume-high text-xs"></i>
+                  </button>
+                </div>
+                <p class="text-sm font-medium italic leading-relaxed text-indigo-50">"...with quite some old people living there."</p>
+                <p class="text-xs text-indigo-200 mt-2">...有相當多的老人家居住在那裡。</p>
+              </div>
+              <div class="text-xs text-indigo-200 text-right border-t border-indigo-400/40 pt-2">
+                <i class="fa-solid fa-rotate mr-1"></i>點擊翻回正面
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ================= QUIZ TAB ================= -->
+    <section id="tab-quiz" class="hidden space-y-6">
+      
+      <!-- Quiz Header Card -->
+      <div class="bg-white rounded-2xl p-6 shadow-sm border border-slate-200 flex flex-col sm:flex-row justify-between items-center gap-4">
+        <div>
+          <h2 class="text-xl font-bold text-slate-800">螢光筆單字綜合小測驗</h2>
+          <p class="text-xs text-slate-500 mt-1">請完成以下 5 題選擇題，點擊「提交答案」觀看結果與解析。</p>
+        </div>
+        <div id="score-display" class="hidden text-right bg-indigo-50 px-4 py-2 rounded-xl border border-indigo-100">
+          <span class="text-xs text-indigo-500 font-semibold block">測驗得分</span>
+          <span id="score-val" class="text-2xl font-black text-indigo-600">0 / 100</span>
+        </div>
+      </div>
+
+      <!-- Quiz Form -->
+      <form id="quiz-form" onsubmit="submitQuiz(event)" class="space-y-6">
+        
+        <!-- Question 1 -->
+        <div class="quiz-q-box bg-white p-6 rounded-2xl border border-slate-200 shadow-sm space-y-4" data-q="1" data-ans="A">
+          <div class="flex items-start gap-3">
+            <span class="w-7 h-7 bg-indigo-600 text-white font-bold rounded-lg flex items-center justify-center text-sm flex-shrink-0">1</span>
+            <p class="text-base font-semibold text-slate-800">My brother has a big dream: he wants to start a cooking <u class="text-indigo-600 underline-offset-4">______</u> to learn how to make traditional desserts.</p>
+          </div>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 pl-10">
+            <label class="flex items-center gap-3 p-3.5 border border-slate-200 rounded-xl cursor-pointer hover:bg-slate-50 transition">
+              <input type="radio" name="q1" value="A" class="w-4 h-4 text-indigo-600 focus:ring-indigo-500">
+              <span class="text-sm font-medium text-slate-700">(A) course</span>
+            </label>
+            <label class="flex items-center gap-3 p-3.5 border border-slate-200 rounded-xl cursor-pointer hover:bg-slate-50 transition">
+              <input type="radio" name="q1" value="B" class="w-4 h-4 text-indigo-600 focus:ring-indigo-500">
+              <span class="text-sm font-medium text-slate-700">(B) wave</span>
+            </label>
+            <label class="flex items-center gap-3 p-3.5 border border-slate-200 rounded-xl cursor-pointer hover:bg-slate-50 transition">
+              <input type="radio" name="q1" value="C" class="w-4 h-4 text-indigo-600 focus:ring-indigo-500">
+              <span class="text-sm font-medium text-slate-700">(C) problem</span>
+            </label>
+            <label class="flex items-center gap-3 p-3.5 border border-slate-200 rounded-xl cursor-pointer hover:bg-slate-50 transition">
+              <input type="radio" name="q1" value="D" class="w-4 h-4 text-indigo-600 focus:ring-indigo-500">
+              <span class="text-sm font-medium text-slate-700">(D) member</span>
+            </label>
+          </div>
+          <div class="explanation-box hidden pl-10 pt-2 text-xs leading-relaxed"></div>
+        </div>
+
+        <!-- Question 2 -->
+        <div class="quiz-q-box bg-white p-6 rounded-2xl border border-slate-200 shadow-sm space-y-4" data-q="2" data-ans="B">
+          <div class="flex items-start gap-3">
+            <span class="w-7 h-7 bg-indigo-600 text-white font-bold rounded-lg flex items-center justify-center text-sm flex-shrink-0">2</span>
+            <p class="text-base font-semibold text-slate-800">As a manager, you have to <u class="text-indigo-600 underline-offset-4">______</u> many different problems and stressful situations every single day.</p>
+          </div>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 pl-10">
+            <label class="flex items-center gap-3 p-3.5 border border-slate-200 rounded-xl cursor-pointer hover:bg-slate-50 transition">
+              <input type="radio" name="q2" value="A" class="w-4 h-4 text-indigo-600 focus:ring-indigo-500">
+              <span class="text-sm font-medium text-slate-700">(A) look for</span>
+            </label>
+            <label class="flex items-center gap-3 p-3.5 border border-slate-200 rounded-xl cursor-pointer hover:bg-slate-50 transition">
+              <input type="radio" name="q2" value="B" class="w-4 h-4 text-indigo-600 focus:ring-indigo-500">
+              <span class="text-sm font-medium text-slate-700">(B) deal with</span>
+            </label>
+            <label class="flex items-center gap-3 p-3.5 border border-slate-200 rounded-xl cursor-pointer hover:bg-slate-50 transition">
+              <input type="radio" name="q2" value="C" class="w-4 h-4 text-indigo-600 focus:ring-indigo-500">
+              <span class="text-sm font-medium text-slate-700">(C) talk about</span>
+            </label>
+            <label class="flex items-center gap-3 p-3.5 border border-slate-200 rounded-xl cursor-pointer hover:bg-slate-50 transition">
+              <input type="radio" name="q2" value="D" class="w-4 h-4 text-indigo-600 focus:ring-indigo-500">
+              <span class="text-sm font-medium text-slate-700">(D) think of</span>
+            </label>
+          </div>
+          <div class="explanation-box hidden pl-10 pt-2 text-xs leading-relaxed"></div>
+        </div>
+
+        <!-- Question 3 -->
+        <div class="quiz-q-box bg-white p-6 rounded-2xl border border-slate-200 shadow-sm space-y-4" data-q="3" data-ans="A">
+          <div class="flex items-start gap-3">
+            <span class="w-7 h-7 bg-indigo-600 text-white font-bold rounded-lg flex items-center justify-center text-sm flex-shrink-0">3</span>
+            <p class="text-base font-semibold text-slate-800">It is <u class="text-indigo-600 underline-offset-4">______</u> ten o'clock now; we need to hurry up, or we will miss the last train home.</p>
+          </div>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 pl-10">
+            <label class="flex items-center gap-3 p-3.5 border border-slate-200 rounded-xl cursor-pointer hover:bg-slate-50 transition">
+              <input type="radio" name="q3" value="A" class="w-4 h-4 text-indigo-600 focus:ring-indigo-500">
+              <span class="text-sm font-medium text-slate-700">(A) almost</span>
+            </label>
+            <label class="flex items-center gap-3 p-3.5 border border-slate-200 rounded-xl cursor-pointer hover:bg-slate-50 transition">
+              <input type="radio" name="q3" value="B" class="w-4 h-4 text-indigo-600 focus:ring-indigo-500">
+              <span class="text-sm font-medium text-slate-700">(B) quite</span>
+            </label>
+            <label class="flex items-center gap-3 p-3.5 border border-slate-200 rounded-xl cursor-pointer hover:bg-slate-50 transition">
+              <input type="radio" name="q3" value="C" class="w-4 h-4 text-indigo-600 focus:ring-indigo-500">
+              <span class="text-sm font-medium text-slate-700">(C) never</span>
+            </label>
+            <label class="flex items-center gap-3 p-3.5 border border-slate-200 rounded-xl cursor-pointer hover:bg-slate-50 transition">
+              <input type="radio" name="q3" value="D" class="w-4 h-4 text-indigo-600 focus:ring-indigo-500">
+              <span class="text-sm font-medium text-slate-700">(D) seldom</span>
+            </label>
+          </div>
+          <div class="explanation-box hidden pl-10 pt-2 text-xs leading-relaxed"></div>
+        </div>
+
+        <!-- Question 4 -->
+        <div class="quiz-q-box bg-white p-6 rounded-2xl border border-slate-200 shadow-sm space-y-4" data-q="4" data-ans="B">
+          <div class="flex items-start gap-3">
+            <span class="w-7 h-7 bg-indigo-600 text-white font-bold rounded-lg flex items-center justify-center text-sm flex-shrink-0">4</span>
+            <p class="text-base font-semibold text-slate-800">Out of all the students in the class, Kevin is the <u class="text-indigo-600 underline-offset-4">______</u> likely to cheat on the exam because he is always honest.</p>
+          </div>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 pl-10">
+            <label class="flex items-center gap-3 p-3.5 border border-slate-200 rounded-xl cursor-pointer hover:bg-slate-50 transition">
+              <input type="radio" name="q4" value="A" class="w-4 h-4 text-indigo-600 focus:ring-indigo-500">
+              <span class="text-sm font-medium text-slate-700">(A) most</span>
+            </label>
+            <label class="flex items-center gap-3 p-3.5 border border-slate-200 rounded-xl cursor-pointer hover:bg-slate-50 transition">
+              <input type="radio" name="q4" value="B" class="w-4 h-4 text-indigo-600 focus:ring-indigo-500">
+              <span class="text-sm font-medium text-slate-700">(B) least</span>
+            </label>
+            <label class="flex items-center gap-3 p-3.5 border border-slate-200 rounded-xl cursor-pointer hover:bg-slate-50 transition">
+              <input type="radio" name="q4" value="C" class="w-4 h-4 text-indigo-600 focus:ring-indigo-500">
+              <span class="text-sm font-medium text-slate-700">(C) more</span>
+            </label>
+            <label class="flex items-center gap-3 p-3.5 border border-slate-200 rounded-xl cursor-pointer hover:bg-slate-50 transition">
+              <input type="radio" name="q4" value="D" class="w-4 h-4 text-indigo-600 focus:ring-indigo-500">
+              <span class="text-sm font-medium text-slate-700">(D) less</span>
+            </label>
+          </div>
+          <div class="explanation-box hidden pl-10 pt-2 text-xs leading-relaxed"></div>
+        </div>
+
+        <!-- Question 5 -->
+        <div class="quiz-q-box bg-white p-6 rounded-2xl border border-slate-200 shadow-sm space-y-4" data-q="5" data-ans="B">
+          <div class="flex items-start gap-3">
+            <span class="w-7 h-7 bg-indigo-600 text-white font-bold rounded-lg flex items-center justify-center text-sm flex-shrink-0">5</span>
+            <p class="text-base font-semibold text-slate-800">The water in the lake is so calm today that you can't even see a single <u class="text-indigo-600 underline-offset-4">______</u> on the surface.</p>
+          </div>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 pl-10">
+            <label class="flex items-center gap-3 p-3.5 border border-slate-200 rounded-xl cursor-pointer hover:bg-slate-50 transition">
+              <input type="radio" name="q5" value="A" class="w-4 h-4 text-indigo-600 focus:ring-indigo-500">
+              <span class="text-sm font-medium text-slate-700">(A) course</span>
+            </label>
+            <label class="flex items-center gap-3 p-3.5 border border-slate-200 rounded-xl cursor-pointer hover:bg-slate-50 transition">
+              <input type="radio" name="q5" value="B" class="w-4 h-4 text-indigo-600 focus:ring-indigo-500">
+              <span class="text-sm font-medium text-slate-700">(B) wave</span>
+            </label>
+            <label class="flex items-center gap-3 p-3.5 border border-slate-200 rounded-xl cursor-pointer hover:bg-slate-50 transition">
+              <input type="radio" name="q5" value="C" class="w-4 h-4 text-indigo-600 focus:ring-indigo-500">
+              <span class="text-sm font-medium text-slate-700">(C) price</span>
+            </label>
+            <label class="flex items-center gap-3 p-3.5 border border-slate-200 rounded-xl cursor-pointer hover:bg-slate-50 transition">
+              <input type="radio" name="q5" value="D" class="w-4 h-4 text-indigo-600 focus:ring-indigo-500">
+              <span class="text-sm font-medium text-slate-700">(D) plan</span>
+            </label>
+          </div>
+          <div class="explanation-box hidden pl-10 pt-2 text-xs leading-relaxed"></div>
+        </div>
+
+        <!-- Submit & Reset Buttons -->
+        <div class="flex flex-col sm:flex-row gap-3 pt-4">
+          <button type="submit" id="btn-submit-quiz" class="flex-1 bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3.5 rounded-xl shadow-md transition text-base">
+            <i class="fa-solid fa-paper-plane mr-2"></i>提交答案
+          </button>
+          <button type="button" onclick="resetQuiz()" class="px-6 bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold py-3.5 rounded-xl transition text-base">
+            <i class="fa-solid fa-arrow-rotate-left mr-2"></i>重新測驗
+          </button>
+        </div>
+
+      </form>
+    </section>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="bg-white border-t border-slate-200 py-4 text-center text-xs text-slate-400">
+    英語考題螢光筆單字卡複習 &copy; 2026
+  </footer>
+
+  <!-- JavaScript Code -->
+  <script>
+    // Toggle Card Flip
+    function toggleFlip(cardElement) {
+      cardElement.classList.toggle('flipped');
+    }
+
+    // Speech Synthesis (Pronunciation)
+    function speakText(event, text) {
+      event.stopPropagation(); // prevent card flip when clicking speech button
+      if ('speechSynthesis' in window) {
+        window.speechSynthesis.cancel(); // stop current speech
+        const utterance = new SpeechSynthesisUtterance(text);
+        utterance.lang = 'en-US';
+        utterance.rate = 0.9;
+        window.speechSynthesis.speak(utterance);
+      } else {
+        alert('您的瀏覽器不支援語音朗讀。');
+      }
+    }
+
+    // Switch Tabs
+    function switchTab(tabName) {
+      const vocabSec = document.getElementById('tab-vocab');
+      const quizSec = document.getElementById('tab-quiz');
+      const vocabBtn = document.getElementById('btn-tab-vocab');
+      const quizBtn = document.getElementById('btn-tab-quiz');
+
+      if (tabName === 'vocab') {
+        vocabSec.classList.remove('hidden');
+        quizSec.classList.add('hidden');
+        vocabBtn.className = "flex-1 sm:flex-none px-5 py-2 rounded-lg text-sm font-semibold transition-all bg-white text-indigo-700 shadow";
+        quizBtn.className = "flex-1 sm:flex-none px-5 py-2 rounded-lg text-sm font-semibold transition-all text-indigo-100 hover:text-white hover:bg-white/10";
+      } else {
+        vocabSec.classList.add('hidden');
+        quizSec.classList.remove('hidden');
+        quizBtn.className = "flex-1 sm:flex-none px-5 py-2 rounded-lg text-sm font-semibold transition-all bg-white text-indigo-700 shadow";
+        vocabBtn.className = "flex-1 sm:flex-none px-5 py-2 rounded-lg text-sm font-semibold transition-all text-indigo-100 hover:text-white hover:bg-white/10";
+      }
+    }
+
+    // Quiz Explanations Data
+    const explanations = {
+      1: "正確答案是 (A) course。start a cooking course 意思是「開/修一門烹飪課程」。",
+      2: "正確答案是 (B) deal with。deal with 是核心片語，意為「處理、應付（問題或狀況）」。",
+      3: "正確答案是 (A) almost。almost ten o'clock 表示「幾乎/快要 10 點了」。",
+      4: "正確答案是 (B) least。the least likely 表示「最不可能」。全句：Kevin 是全班最不可能在考試作弊的人。",
+      5: "正確答案是 (B) wave。wave 為「波浪」。全句：今天湖面平靜到連一道波浪都看不見。"
+    };
+
+    // Quiz Submission Handler
+    function submitQuiz(e) {
+      e.preventDefault();
+      
+      let score = 0;
+      const totalQuestions = 5;
+      const form = document.getElementById('quiz-form');
+      const qBoxes = document.querySelectorAll('.quiz-q-box');
+
+      qBoxes.forEach(box => {
+        const qNum = box.getAttribute('data-q');
+        const correctAns = box.getAttribute('data-ans');
+        const selectedInput = form.querySelector(`input[name="q${qNum}"]:checked`);
+        const expBox = box.querySelector('.explanation-box');
+
+        // Reset option styles
+        const labels = box.querySelectorAll('label');
+        labels.forEach(lbl => {
+          lbl.classList.remove('bg-emerald-50', 'border-emerald-500', 'bg-rose-50', 'border-rose-400');
+        });
+
+        expBox.classList.remove('hidden', 'text-emerald-700', 'text-rose-700');
+
+        if (selectedInput) {
+          const userVal = selectedInput.value;
+          if (userVal === correctAns) {
+            score += 20;
+            selectedInput.closest('label').classList.add('bg-emerald-50', 'border-emerald-500');
+            expBox.classList.add('text-emerald-700');
+            expBox.innerHTML = `<i class="fa-solid fa-circle-check text-emerald-600 mr-1"></i> <strong>回答正確！</strong> ${explanations[qNum]}`;
+          } else {
+            selectedInput.closest('label').classList.add('bg-rose-50', 'border-rose-400');
+            // Highlight correct answer
+            const correctInput = box.querySelector(`input[name="q${qNum}"][value="${correctAns}"]`);
+            if (correctInput) correctInput.closest('label').classList.add('bg-emerald-50', 'border-emerald-500');
+
+            expBox.classList.add('text-rose-700');
+            expBox.innerHTML = `<i class="fa-solid fa-circle-xmark text-rose-600 mr-1"></i> <strong>回答錯誤！</strong> ${explanations[qNum]}`;
+          }
+        } else {
+          // Unanswered
+          const correctInput = box.querySelector(`input[name="q${qNum}"][value="${correctAns}"]`);
+          if (correctInput) correctInput.closest('label').classList.add('bg-emerald-50', 'border-emerald-500');
+
+          expBox.classList.add('text-rose-700');
+          expBox.innerHTML = `<i class="fa-solid fa-circle-exclamation text-amber-600 mr-1"></i> <strong>未作答！</strong> ${explanations[qNum]}`;
+        }
+      });
+
+      // Show Score
+      const scoreDisplay = document.getElementById('score-display');
+      const scoreVal = document.getElementById('score-val');
+      scoreVal.innerText = `${score} / 100`;
+      scoreDisplay.classList.remove('hidden');
+
+      // Scroll smoothly to score box
+      scoreDisplay.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+
+    // Reset Quiz Function
+    function resetQuiz() {
+      const form = document.getElementById('quiz-form');
+      form.reset();
+
+      const qBoxes = document.querySelectorAll('.quiz-q-box');
+      qBoxes.forEach(box => {
+        const labels = box.querySelectorAll('label');
+        labels.forEach(lbl => {
+          lbl.classList.remove('bg-emerald-50', 'border-emerald-500', 'bg-rose-50', 'border-rose-400');
+        });
+        const expBox = box.querySelector('.explanation-box');
+        expBox.classList.add('hidden');
+        expBox.innerHTML = '';
+      });
+
+      const scoreDisplay = document.getElementById('score-display');
+      scoreDisplay.classList.add('hidden');
+    }
+  </script>
+</body>
+</html>
